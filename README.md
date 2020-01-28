@@ -1,1 +1,1 @@
-# SWENG-2020-The-Turing-Game
+# SWENG 2020: The Turing Game
