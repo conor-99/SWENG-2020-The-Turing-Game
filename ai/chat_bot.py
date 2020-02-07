@@ -8,8 +8,8 @@ def main():
     preProcessor = DataPreProcessor(input)
 
     # Where output is the processed output.
-    output = preProcessor.processInput()
-
+    preProcessor.processInput()
+    output = preProcessor.input
 
 if __name__ == '__main__':
     main()
