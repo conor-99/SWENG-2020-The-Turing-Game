@@ -7,9 +7,10 @@ def main():
     # Where input is user input from commandline.
     preProcessor = DataPreProcessor(input)
 
-    # Where output is the processed output.
+    # Where output is the processed output
     preProcessor.processInput()
     output = preProcessor.input
+    
 
 if __name__ == '__main__':
     main()
