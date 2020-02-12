@@ -1,4 +1,5 @@
 # Class worked on by: Claire, Diego, Kishore
+import re
 
 class DataPreProcessor:
     # Creates an instance of the preprocessor with input being input from commandline passed to it from main class.
@@ -14,11 +15,21 @@ class DataPreProcessor:
 
     # Change accented characters eg. é to e. - Diego
     def convertAccentedCharsToAscii(self):
-        return
+
+        self = re.sub(u"[àáâãäå]", 'a', self)
+        self = re.sub(u"[èéêë]", 'e', self)
+        self = re.sub(u"[ìíîï]", 'i', self)
+        self = re.sub(u"[òóôõö]", 'o', self)
+        self = re.sub(u"[ùúûü]", 'u', self)
+        self = re.sub(u"[ýÿ]", 'y', self)
+
+
+        return self
 
     # Put all text to lowercase.- Diego
     def lowerCase(self):
-        return
+        self.lowerCase()
+        return self
 
     # Convert one to 1. - Kishore
     def convertNumberWordToDigit(self):
