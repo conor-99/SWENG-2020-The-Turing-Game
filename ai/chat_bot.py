@@ -1,5 +1,4 @@
-# Class worked on by: Claire, Luiz Fellipe
-
+# Class worked on by: Claire, Luiz Fellipe, Leo 
 from data_pre_processor import DataPreProcessor
 
 # Takes input from commandline, processes it, displays processed output via commandline.

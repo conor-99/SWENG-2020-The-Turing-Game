@@ -1,5 +1,6 @@
-# Class worked on by: Claire, Diego, Kishore
+# Class worked on by: Claire, Diego, Kishore, Leo
 import re
+from keras.preprocessing.text import text_to_word_sequence
 
 class DataPreProcessor:
     input = 0
@@ -10,9 +11,9 @@ class DataPreProcessor:
     # Processes the input.
     def processInput(self):
         self.convertAccentedCharsToAscii()
-        self.input = self.input.lower()
         self.convertNumberWordToDigit()
         self.removeNumbers()
+        self.input = text_to_word_sequence(self.input)
         return
 
     # Change accented characters eg. é to e. - Diego
