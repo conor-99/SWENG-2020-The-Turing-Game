@@ -23,7 +23,7 @@ class DataPreProcessor:
         self.input = re.sub(r'[òóôõöðøōŏőÒÓÔÕÖØŌŎŐ]', 'o', self.input)
         self.input = re.sub(r'[ùúûüũūŭůűųÙÚÛÜŨŪŬŮŰŲ]', 'u', self.input)
         self.input = re.sub(r'[ýÿŷÝŸ]', 'y', self.input)
-        self.input = re.sub(r'\W+', '_', self.input)
+        self.input = re.sub(r'[^A-Za-z0-9]+', '_', self.input)
         return
 
     # Convert one to 1. - Kishore
