@@ -33,3 +33,13 @@ class DataPreProcessor:
     # Remove all numeric characters. - Kishore
     def removeNumbers(self):
         return
+
+    # Resolve words that have a '_' character
+    # ie. if "h3llo" is passed through convertAccentedCharsToAscii(), it becomes "h_llo"
+    # try to dictionary match the string to a word that will fit, and return that
+    def resolveUnderscores(self):
+        return
+
+    # Just an idea, perhaps it would be outside of scope or too hard
+    def resolveMisspellings(self):
+        return
