@@ -2,34 +2,29 @@
 import re
 
 class DataPreProcessor:
+    input = 0
     # Creates an instance of the preprocessor with input being input from commandline passed to it from main class.
     def __init__(self, input):
         self.input = input
-    
+
     # Processes the input.
     def processInput(self):
         self.convertAccentedCharsToAscii()
-        self.lowerCase()
+        self.input = self.input.lower()
         self.convertNumberWordToDigit()
         self.removeNumbers()
+        return
 
     # Change accented characters eg. é to e. - Diego
     def convertAccentedCharsToAscii(self):
-
-        self = re.sub(u"[àáâãäå]", 'a', self)
-        self = re.sub(u"[èéêë]", 'e', self)
-        self = re.sub(u"[ìíîï]", 'i', self)
-        self = re.sub(u"[òóôõö]", 'o', self)
-        self = re.sub(u"[ùúûü]", 'u', self)
-        self = re.sub(u"[ýÿ]", 'y', self)
-
-
-        return self
-
-    # Put all text to lowercase.- Diego
-    def lowerCase(self):
-        self.lowerCase()
-        return self
+        self.input = re.sub(r'[àáâãäåæÀÁÂÃÄÅÆ]', 'a', self.input)
+        self.input = re.sub(r'[èéêëÈÉÊË]', 'e', self.input)
+        self.input = re.sub(r'[ìíîïÌÍÎÏ]', 'i', self.input)
+        self.input = re.sub(r'[òóôõöðøōŏőÒÓÔÕÖØŌŎŐ]', 'o', self.input)
+        self.input = re.sub(r'[ùúûüũūŭůűųÙÚÛÜŨŪŬŮŰŲ]', 'u', self.input)
+        self.input = re.sub(r'[ýÿŷÝŸ]', 'y', self.input)
+        self.input = re.sub(r'\W+', '_', self.input)
+        return
 
     # Convert one to 1. - Kishore
     def convertNumberWordToDigit(self):
