@@ -33,11 +33,13 @@ class DataPreProcessor:
 
     # Convert one to 1. - Kishore
     def convertNumberWordToDigit(self):
-
-
-        
+        from word2number import w2n
+        print w2n.word_to_num(self)
         return
 
     # Remove all numeric characters. - Kishore
     def removeNumbers(self):
-        return
+     
+        result = ''.join([i for i in self if not i.isdigit()])
+        print(result)
+        return result
