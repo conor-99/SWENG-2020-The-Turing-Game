@@ -1,5 +1,6 @@
 # Class worked on by: Claire, Diego, Kishore, Leo
 import re
+from word2number import w2n
 from keras.preprocessing.text import text_to_word_sequence
 
 class DataPreProcessor:
@@ -29,13 +30,12 @@ class DataPreProcessor:
 
     # Convert one to 1. - Kishore
     def convertNumberWordToDigit(self):
-        from word2number import w2n
         print w2n.word_to_num(self)
         return self
 
     # Remove all numeric characters. - Kishore
     def removeNumbers(self):
-     
+
         result = ''.join([i for i in self if not i.isdigit()])
         print(result)
         return result
