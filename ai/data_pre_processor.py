@@ -1,7 +1,8 @@
 # Class worked on by: Claire, Diego, Kishore, Leo
 import re
 from word2number import w2n
-from keras.preprocessing.text import text_to_word_sequence
+from string import digits
+#from keras.preprocessing.text import text_to_word_sequence
 
 class DataPreProcessor:
     input = 0
@@ -12,9 +13,9 @@ class DataPreProcessor:
     # Processes the input.
     def processInput(self):
         self.convertAccentedCharsToAscii()
-        self.convertNumberWordToDigit()
         self.removeNumbers()
-        self.input = text_to_word_sequence(self.input)
+        self.convertNumberWordToDigit()
+        #self.input = text_to_word_sequence(self.input)
         return
 
     # Change accented characters eg. é to e. - Diego
@@ -30,15 +31,17 @@ class DataPreProcessor:
 
     # Convert one to 1. - Kishore
     def convertNumberWordToDigit(self):
-        print w2n.word_to_num(self)
-        return self
+        try:
+            self.input = w2n.word_to_num(self.input)
+        except Exception as e:
+            print(e)    
+        return 
 
     # Remove all numeric characters. - Kishore
     def removeNumbers(self):
-
-        result = ''.join([i for i in self if not i.isdigit()])
-        print(result)
-        return result
+        self.input = ''.join([i for i in self.input if not i.isdigit()])
+        self.input = (self.input).replace("_", " ")
+        return 
 
     # Resolve words that have a '_' character
     # ie. if "h3llo" is passed through convertAccentedCharsToAscii(), it becomes "h_llo"
