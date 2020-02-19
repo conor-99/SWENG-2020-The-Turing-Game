@@ -23,12 +23,12 @@ class DataPreProcessor:
 
     # Rids the input of spelling mistakes, replacing with the most similar correctly spellled word
     def autoCorrect(self):
-        #self.input = text_to_word_sequence(self.input)
-        #array = self.string2Array(self.input)
-        #for x in range(len(array)):
+        # self.input = text_to_word_sequence(self.input)
+        # array = self.string2Array(self.input)
+        # for x in range(len(array)):
         #    if(self.spellchecker.spell(array[x]) == False):
         #        array[x] = self.spellchecker.suggest(array[x])[0]
-        #self.input = self.array2String(array)
+        # self.input = self.array2String(array)
         return
 
     # Convert a ' ' delimited string to a list of words
