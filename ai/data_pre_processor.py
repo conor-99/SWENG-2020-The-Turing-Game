@@ -82,13 +82,3 @@ class DataPreProcessor:
         self.input = ''.join([i for i in self.input if not i.isdigit()])
         self.input = (self.input).replace("_", " ")
         return
-
-    # Resolve words that have a '_' character
-    # ie. if "h3llo" is passed through convertAccentedCharsToAscii(), it becomes "h_llo"
-    # try to dictionary match the string to a word that will fit, and return that
-    def resolveUnderscores(self):
-        return
-
-    # Just an idea, perhaps it would be outside of scope or too hard
-    def resolveMisspellings(self):
-        return
