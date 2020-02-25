@@ -34,7 +34,7 @@ class TestDataPreProcessor(unittest.TestCase):
         preProcessor = DataPreProcessor(testInput)
         preProcessor.convertNumberWordToDigit()
         testInput = preProcessor.input
-        self.assertEqual(testInput,1+' '+2) 
+        self.assertEqual(testInput,'1 2') 
        
         testInput = 'twelve'
         preProcessor = DataPreProcessor(testInput)
@@ -46,7 +46,7 @@ class TestDataPreProcessor(unittest.TestCase):
         preProcessor = DataPreProcessor(testInput)
         preProcessor.convertNumberWordToDigit()
         testInput = preProcessor.input
-        self.assertEqual(testInput,1+' or '+3) 
+        self.assertEqual(testInput,'1 or 3') 
 
 
 if __name__ == '__main__':
