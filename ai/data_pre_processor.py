@@ -1,11 +1,10 @@
 # Class worked on by: Claire, Diego, Kishore, Leo
-import re, os#, hunspell
+import re, os
+from spellchecker import SpellChecker
 from word2number import w2n
 from string import digits
-#from keras.preprocessing.text import text_to_word_sequence
 
 class DataPreProcessor:
-    #spellchecker = hunspell.HunSpell("./dictionaries/en_GB.dic", "./dictionaries/en_GB.aff")
     input = 0
     # Creates an instance of the preprocessor with input being input from commandline passed to it from main class.
     def __init__(self, input):
@@ -18,17 +17,18 @@ class DataPreProcessor:
         self.convertNumberWordToDigit()
         # This is only relevant because of the weird library
         self.input = str(self.input)
-        #self.autoCorrect()
+        self.autoCorrect()
         return
 
     # Rids the input of spelling mistakes, replacing with the most similar correctly spellled word
     def autoCorrect(self):
-        # self.input = text_to_word_sequence(self.input)
-        # array = self.string2Array(self.input)
-        # for x in range(len(array)):
-        #    if(self.spellchecker.spell(array[x]) == False):
-        #        array[x] = self.spellchecker.suggest(array[x])[0]
-        # self.input = self.array2String(array)
+        spellchecker = SpellChecker()
+        input = self.string2Array(self.input)
+        spellchecker.unknown(input)
+        output = []
+        for x in range(len(input)):
+            output.append(spellchecker.correction(input[x]))
+        self.input = self.array2String(output)
         return
 
     # Convert a ' ' delimited string to a list of words
