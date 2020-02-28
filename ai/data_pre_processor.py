@@ -14,7 +14,7 @@ class DataPreProcessor:
     # Processes the input
     def processInput(self):
         self.convertAccentedCharsToAscii()
-        #self.convertNumberWordToDigit()
+        self.removeNumberWords
         # This is only relevant because of the weird library
         self.input = str(self.input)
         self.autoCorrect()
@@ -71,16 +71,144 @@ class DataPreProcessor:
 
     # Convert one to 1. - Kishore
     def removeNumberWords(self):
-        numberwords = ['one','two','three','four','five','six','seven','eight','nine','ten'
-        ,'eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen',
-        'nineteen','twenty','thirty','fourty','fifty','sixty','seventy','eighty','ninety',
-        'hundred','thousand','million','billion','trillion']
+        units = [
+        "zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
+        "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
+        "sixteen", "seventeen", "eighteen", "nineteen",
+        ]
+
+        tens = ["twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
+
+        scales = ["hundred", "thousand", "million", "billion", "trillion"]
+        
         input = self.string2Array(self.input)
+        
         for x in range(len(input)):
-            for y in numberwords:
+            
+            for y in units:
+                
                 if(input[x] == y):
-                    input[x] = ""
+
+                    try:
+
+                        res = str(w2n.word_to_num(input[x+1]))
+                    
+
+                        for a in scales:
+ 
+                            if((str(input[x+1])) == a):
+                                            
+                                            try:
+                                                    result = w2n.word_to_num(input[x+2])
+                                                    input [x] = str(w2n.word_to_num(input[x]) * w2n.word_to_num(input[x+1])* w2n.word_to_num(input[x+2]))
+                                                    input[x + 1]= ""
+                                                    input[x + 2]= ""
+                                            except:
+                                    
+                                                    input[x] = str(w2n.word_to_num(input[x]) * w2n.word_to_num(input[x+1]))
+                                                    input[x + 1]= ""
+                                    
+                    
+                    except:
+                        print("Next word is not a scale word")
+                        input[x] = str(w2n.word_to_num(input[x]))
+
+            for z in tens:
+            
+                if(input[x] == z):
+                    
+                    try:
+                        res = w2n.word_to_num(input[x+1])
+
+                        for b in units:
+
+                            if(str(input[x+1]) == b):
+                    
+                              
+                                    input [x] = str(w2n.word_to_num(input[x]) + w2n.word_to_num(input[x+1]))
+                                    input[x + 1]= ""
+
+                                    
+                                    for c in scales:
+                                        
+                                        if((str(input[x+2])) == c):
+                                            
+                                            try:
+                                                    result = w2n.word_to_num(input[x+3])
+                                                    input [x] = str(w2n.word_to_num(input[x]) * w2n.word_to_num(input[x+2])* w2n.word_to_num(input[x+3]))
+                                                    input[x + 2]= ""
+                                                    input[x + 3]= ""
+                                            except:
+                                    
+                                                    input[x] = str(w2n.word_to_num(input[x]) * w2n.word_to_num(input[x+2]))
+                                                    input[x + 2]= ""
+                                    
+                                        
+
+                        
+                        
+                        
+                        for d in scales:
+ 
+                            if((str(input[x+1])) == d):
+                                            
+                                            try:
+                                                    result = w2n.word_to_num(input[x+2])
+                                                    input [x] = str(w2n.word_to_num(input[x]) * w2n.word_to_num(input[x+1])* w2n.word_to_num(input[x+2]))
+                                                    input[x + 1]= ""
+                                                    input[x + 2]= ""
+                                            except:
+                                    
+                                                    input[x] = str(w2n.word_to_num(input[x]) * w2n.word_to_num(input[x+1]))
+                                                    input[x + 1]= ""
+                                    
+                                        
+                            
+                        
+                    except:
+                        
+                            print("Next word is not a number word")
+                            input [x] = str(w2n.word_to_num(input[x]))
+                            
+    
+    
+
+        index1 = 0
+        value1 = 0
+        index2 = 0
+        value2 = 0
+        value3 = 0   
+        
+        
+        
+        for x in range(len(input)):
+
+            if(str(input[x]) == "and"):
+                index1=x
+                input[x] = ""
+                print(index1)
+                
+                
+
+                for y in range(0,index1):
+
+                    if(input[y].isnumeric()):
+                        value1 = int(str(input[y]))
+                        index2 = y
+                        print(value1)
+                        
+
+                        for z in range(index1,len(input)):
+                            if(input[z].isnumeric()):
+                                value2 = int(str(input[z]))
+                                input[z] = ""
+                                print(value2)
+
+        value3 = value1 + value2
+        input[index2] = str(value3)
+
         self.input = self.array2String(input)
+
         return
 
     # Remove all numeric characters. - Kishore
@@ -88,3 +216,5 @@ class DataPreProcessor:
         self.input = ''.join([i for i in self.input if not i.isdigit()])
         self.input = (self.input).replace("_", " ")
         return
+
+
