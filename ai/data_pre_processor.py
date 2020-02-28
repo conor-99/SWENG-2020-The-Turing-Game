@@ -1,3 +1,4 @@
+# coding=utf-8
 # Class worked on by: Claire, Diego, Kishore, Leo
 import re, os
 from spellchecker import SpellChecker
@@ -13,11 +14,11 @@ class DataPreProcessor:
     # Processes the input
     def processInput(self):
         self.convertAccentedCharsToAscii()
-        self.removeNumbers()
-        self.convertNumberWordToDigit()
+        #self.convertNumberWordToDigit()
         # This is only relevant because of the weird library
         self.input = str(self.input)
         self.autoCorrect()
+        self.removeNumberWords()
         return
 
     # Rids the input of spelling mistakes, replacing with the most similar correctly spellled word
@@ -69,12 +70,17 @@ class DataPreProcessor:
         return
 
     # Convert one to 1. - Kishore
-    def convertNumberWordToDigit(self):
-        try:
-            self.input = w2n.word_to_num(self.input)
-            print('\033[93m' + "The original input has been overwritten by this function." + '\033[0m')
-        except Exception as e:
-            return
+    def removeNumberWords(self):
+        numberwords = ['one','two','three','four','five','six','seven','eight','nine','ten'
+        ,'eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen',
+        'nineteen','twenty','thirty','fourty','fifty','sixty','seventy','eighty','ninety',
+        'hundred','thousand','million','billion','trillion']
+        input = self.string2Array(self.input)
+        for x in range(len(input)):
+            for y in numberwords:
+                if(input[x] == y):
+                    input[x] = ""
+        self.input = self.array2String(input)
         return
 
     # Remove all numeric characters. - Kishore
