@@ -173,39 +173,7 @@ class DataPreProcessor:
     
     
 
-        index1 = 0
-        value1 = 0
-        index2 = 0
-        value2 = 0
-        value3 = 0   
-        
-        
-        
-        for x in range(len(input)):
-
-            if(str(input[x]) == "and"):
-                index1=x
-                input[x] = ""
-                
-                
-                
-
-                for y in range(0,index1):
-
-                    if(input[y].isnumeric()):
-                        value1 = int(str(input[y]))
-                        index2 = y
-                        
-                        
-
-                        for z in range(index1,len(input)):
-                            if(input[z].isnumeric()):
-                                value2 = int(str(input[z]))
-                                input[z] = ""
-                                
-
-        value3 = value1 + value2
-        input[index2] = str(value3)
+ 
 
         self.input = self.array2String(input)
 
