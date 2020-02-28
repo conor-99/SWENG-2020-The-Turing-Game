@@ -110,7 +110,7 @@ class DataPreProcessor:
                                     
                     
                     except:
-                        print("Next word is not a scale word")
+                       
                         input[x] = str(w2n.word_to_num(input[x]))
 
             for z in tens:
@@ -167,7 +167,7 @@ class DataPreProcessor:
                         
                     except:
                         
-                            print("Next word is not a number word")
+                            
                             input [x] = str(w2n.word_to_num(input[x]))
                             
     
@@ -186,7 +186,7 @@ class DataPreProcessor:
             if(str(input[x]) == "and"):
                 index1=x
                 input[x] = ""
-                print(index1)
+                
                 
                 
 
@@ -195,14 +195,14 @@ class DataPreProcessor:
                     if(input[y].isnumeric()):
                         value1 = int(str(input[y]))
                         index2 = y
-                        print(value1)
+                        
                         
 
                         for z in range(index1,len(input)):
                             if(input[z].isnumeric()):
                                 value2 = int(str(input[z]))
                                 input[z] = ""
-                                print(value2)
+                                
 
         value3 = value1 + value2
         input[index2] = str(value3)
