@@ -13,7 +13,7 @@ def main():
 
     while(1):
         userInput = input()
-        
+
         # exit on 'exit'.
         if(userInput == "exit"):
             break
@@ -38,9 +38,6 @@ def arrangeResp(userInput, personality):
     # postProcessor = DataPostProcessor(processedInput, personality)
 
     return processedInput
-
-
-
 
 
 if __name__ == '__main__':
