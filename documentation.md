@@ -235,4 +235,4 @@ curl -X GET localhost/api/leaderboards
 
 Firebase provides built-in method to authenticate users using Google Sign-In. It requires SHA1 fingerprint (should be there now) and generates UserID for a logged in user. 
 UserID is persistent, i.e it is unique for a specific user and will be the same on each log in.
-It will be used to associate data with a spacific user.
+It will be used to associate data with a specific user.
