@@ -3,28 +3,28 @@
 
     <!--Watson Assistant service credentials-->
     <!-- REPLACE `ASSISTANT_ID_HERE` with ID of the Assistant to use -->
-    <string name="assistant_id">92b124b3-95ac-4b92-8bc2-4e3aa9900bfb</string>
+    <string name="assistant_id">9708cdb0-3eeb-4624-9b4c-160131865492</string>
 
     <!-- REPLACE `ASSISTANT_API_KEY_HERE` with Watson Assistant service API Key-->
-    <string name="assistant_apikey">HBpajZz7K_mbUAgz22G6oHUof_1WrtFQUQluP-CVw-z8</string>
+    <string name="assistant_apikey">ztsbUnMvQXPCzABZ9dRgB_4Uyxpj749_RLoF46dpgume</string>
 
     <!-- REPLACE `ASSISTANT_URL_HERE` with Watson Assistant service URL-->
-    <string name="assistant_url">https://gateway-lon.watsonplatform.net/assistant/api</string>
-
+    <string name="assistant_url">https://api.eu-de.assistant.watson.cloud.ibm.com/instances/8eb1eabc-84b8-4c0d-b441-1378cca3d17f</string>
+    <!-- /v2/assistants/9708cdb0-3eeb-4624-9b4c-160131865492/sessions -->
 
     <!--Watson Speech To Text(STT) service credentials-->
     <!-- REPLACE `STT_API_KEY_HERE` with Watson Speech to Text service API Key-->
-    <string name="STT_apikey">hPJibCTMnHQSqed8hkUXYJ5ai0sOhDKvsOspFAa8DXPH</string>
+    <string name="STT_apikey">CTAE9kUb2D5Gb43cTnFMpRXmtr1Y6098H_sWpMoGmm7B</string>
 
     <!-- REPLACE `STT_URL_HERE` with Watson Speech to Text service URL-->
-    <string name="STT_url">https://gateway-lon.watsonplatform.net/speech-to-text/api</string>
+    <string name="STT_url">https://api.eu-gb.speech-to-text.watson.cloud.ibm.com/instances/06bf6c71-9f34-4c7c-a0e6-955c4e8e5e4d</string>
 
 
     <!--Watson Text To Speech(TTS) service credentials-->
     <!-- REPLACE `TTS_API_KEY_HERE` with Watson Text to Speech service API Key-->
-    <string name="TTS_apikey">cpxA7x4F0T8wb27iM1BMSTqHmg0dV3X7S8GEew-baZf-</string>
+    <string name="TTS_apikey">fFmrun9j78BQYleOAZojQwhsRTs7aW_vXAzbFVRVH3oz</string>
 
     <!-- REPLACE `TTS_URL_HERE` with Watson Text to Speech service URL-->
-    <string name="TTS_url">https://gateway-lon.watsonplatform.net/text-to-speech/api</string>
+    <string name="TTS_url">https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/instances/19a402bb-bbe9-4d42-a80d-4d80b44bf23f</string>
 
 </resources>
