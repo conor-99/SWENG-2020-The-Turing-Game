@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:656823049926:android:6800b7a7867655752481c7",
         "android_client_info": {
-          "package_name": "com.example.vmac.WatBot"
+          "package_name": "com.example.vmac.chatbot"
         }
       },
       "oauth_client": [
