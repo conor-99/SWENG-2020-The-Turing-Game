@@ -1,15 +1,26 @@
 # Class worked on by: Claire, Luiz Fellipe, Leo
 from data_pre_processor import DataPreProcessor
 from teenager import Teenager
+from young_adult import YoungAdult
+from adult import Adult
 from data_post_processor import DataPostProcessor
+import random
 
 # Takes input from commandline, processes it, displays processed output via commandline.
 def main():
     # Where input is user input from commandline.
     print('\033[1m' + "Enter the input, or enter 'exit' to end:" + '\033[0m')
 
+    personality = None
+
     # This will be randomly assigned between teenager, young adult and adult with a random name each time.
-    personality = Teenager("Jane Doe")
+    perNum = random.randint(1, 3)
+    if perNum == 1:
+        personality = Teenager("Jane Doe")
+    elif perNum == 2:
+        personality = YoungAdult("James Doe")
+    else:
+        personality = Adult("Janet Doe")
 
     while(1):
         userInput = input()

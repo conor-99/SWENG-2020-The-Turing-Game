@@ -2,11 +2,11 @@
 import random
 from personality import Personality
 
-class Teenager(Personality):
+class YoungAdult(Personality):
 
     def __init__(self, name):
         Personality.__init__(self, name)
-        self.age = random.randint(13, 21)
+        self.age = random.randint(22, 28)
     
     def addPersonality(self, input):
         output = textSubstitution(input)
@@ -22,10 +22,10 @@ class Teenager(Personality):
             output = addSpellingMistakes(input)
         return output
 
-    # You -> u for instance, more likely to be commonly appropriate. Needs to return a string. - Kishore
+    # You -> u for instance, more likely to be commonly appropriate.Needs to return a string. - Kishore
     def shortenWords(self, input):
         return 
 
-    # Substitute words with common misspellings IF APPROPRIATE. Needs to return a string .- Luiz Fellipe
+    # Substitute words with common misspellings IF APPROPRIATE. Needs to return a string. - Luiz Fellipe
     def addSpellingMistakes(self, input):
         return 
