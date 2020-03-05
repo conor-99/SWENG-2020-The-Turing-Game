@@ -10,10 +10,18 @@
       "client_info": {
         "mobilesdk_app_id": "1:656823049926:android:6800b7a7867655752481c7",
         "android_client_info": {
-          "package_name": "com.example.vmac.chatbot"
+          "package_name": "com.example.vmac.WatBot"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "656823049926-lc47e9hig7u0ib5n6oo1uub2b750grh7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vmac.WatBot",
+            "certificate_hash": "7c1da63ffa1103d71ddc6b284f89e71b63b72a98"
+          }
+        },
         {
           "client_id": "656823049926-5f8gkbjh72n5s0sqmof3fvuoiqbs2kmj.apps.googleusercontent.com",
           "client_type": 3
