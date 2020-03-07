@@ -2,11 +2,11 @@ package com.sweng.theturinggame;
 
 public class RequestHandler {
 
-    public static void HttpGet() {
+    public static void httpGet() {
 
     }
 
-    public static void HttpPost() {
+    public static void httpPost() {
 
     }
 

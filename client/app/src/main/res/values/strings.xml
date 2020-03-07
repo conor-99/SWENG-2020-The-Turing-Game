@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">The Turing Game</string>
+    <string name="buttonPlay">Play</string>
+    <string name="buttonLeaderboards">Leaderboards</string>
+    <string name="buttonSettings">Settings</string>
 </resources>

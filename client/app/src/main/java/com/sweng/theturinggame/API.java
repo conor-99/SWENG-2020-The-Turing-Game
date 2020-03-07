@@ -4,27 +4,27 @@ import java.util.Date;
 
 public class API {
 
-    public static int StartConversation() {
+    public static int startConversation() {
         return 123;
     }
 
-    public static void EndConversation(int conversationId, int guess) {
+    public static void endConversation(int conversationId, int guess) {
 
     }
 
-    public static void FlagConversation(int conversationId) {
+    public static void flagConversation(int conversationId) {
 
     }
 
-    public static void SendMessage(int conversationId, String text) {
+    public static void sendMessage(int conversationId, String text) {
 
     }
 
-    public static Message ReceiveMessage(int conversationId) {
+    public static Message receiveMessage(int conversationId) {
         return new Message(0, "", new Date());
     }
 
-    public static UserRanking[] GetLeaderboards() {
+    public static UserRanking[] getLeaderboards() {
         return new UserRanking[] { new UserRanking(0, "user1", 0.95) };
     }
 
