@@ -2,40 +2,49 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="253dp"
-        android:layout_height="53dp"
-        android:text="Play"
-        tools:layout_editor_absoluteX="79dp"
-        tools:layout_editor_absoluteY="349dp" />
+        android:id="@+id/buttonPlay"
+        android:layout_width="260dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="357dp"
+        android:layout_marginBottom="314dp"
+        android:text="@string/buttonPlay"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button3"
-        android:layout_width="187dp"
-        android:layout_height="45dp"
-        android:text="Settings"
-        tools:layout_editor_absoluteX="112dp"
-        tools:layout_editor_absoluteY="500dp" />
+        android:id="@+id/buttonLeaderboards"
+        android:layout_width="230dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="453dp"
+        android:layout_marginBottom="218dp"
+        android:text="@string/buttonLeaderboards"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="253dp"
-        android:layout_height="53dp"
-        android:text="Leaderboards"
-        tools:layout_editor_absoluteX="79dp"
-        tools:layout_editor_absoluteY="422dp" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="136dp"
-        android:layout_height="127dp"
-        app:srcCompat="@drawable/ic_action_name"
-        tools:layout_editor_absoluteX="137dp"
-        tools:layout_editor_absoluteY="145dp" />
+        android:id="@+id/buttonSettings"
+        android:layout_width="230dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="535dp"
+        android:layout_marginBottom="136dp"
+        android:text="@string/buttonSettings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
