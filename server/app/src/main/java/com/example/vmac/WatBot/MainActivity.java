@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean guessedRight;
 
+    private String userId;
     /**
      * Method to be called when activity is created
      * created:
@@ -1149,6 +1150,3 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
-
-
-
