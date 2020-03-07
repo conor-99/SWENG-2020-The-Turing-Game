@@ -15,7 +15,7 @@ class DataPreProcessor:
     def processInput(self):
         self.convertAccentedCharsToAscii()
         self.removeNumbers()
-        self.convertNumberWordToDigit()
+        #self.convertNumberWordToDigit()
         # This is only relevant because of the weird library
         self.input = str(self.input)
         self.autoCorrect()
@@ -175,21 +175,18 @@ class DataPreProcessor:
                                         input[beforeAndIndex] = ""
                                         input[afterAndIndex + 1] = str(finalValue)
                             except:
-                                    errorCounter = errorCounter + 1
-   
+                                    errorCounter = errorCounter + 1      
         self.input = self.array2String(input)
-   
-                  
+        self.input = re.sub(' +', ' ',self.input)                
         return
 
     # Remove all numeric characters. - Kishore
-    def removeNumbers(self):   
+    def removeNumbers(self): 
         input = self.string2Array(self.input)
         for x in range(0,len(input)):
            if((str(input[x]).isnumeric() == True)):
                input[x] = " "         
-        self.input = self.array2String(input) 
-        #input = ''.join([i for i in input if not i.isdigit()])
+        self.input = self.array2String(input)
         return
 
 
