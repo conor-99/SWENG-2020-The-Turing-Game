@@ -29,6 +29,11 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     this.myId = myId;
   }
 
+  public String getId(String myId){
+     return myId;
+   }
+
+   
   @Override
   public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View itemView;
