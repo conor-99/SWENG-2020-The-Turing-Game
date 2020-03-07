@@ -176,9 +176,9 @@ class DataPreProcessor:
                                         input[afterAndIndex + 1] = str(finalValue)
                             except:
                                     errorCounter = errorCounter + 1
-        print(input)
+   
         self.input = self.array2String(input)
-        print(self.input)
+   
                   
         return
 
