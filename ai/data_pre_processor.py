@@ -14,6 +14,7 @@ class DataPreProcessor:
     # Processes the input
     def processInput(self):
         self.convertAccentedCharsToAscii()
+        self.removeNumbers()
         self.convertNumberWordToDigit()
         # This is only relevant because of the weird library
         self.input = str(self.input)
@@ -144,10 +145,10 @@ class DataPreProcessor:
         for x in range(len(input)):                             
             try:
                 if((str(input[x]) == "a") and (str(input[x + 1]) == "a")):
-                        input[x] = " "
-                        input[x+1] = " "
+                        input[x] = ""
+                        input[x+1] = ""
                 if((str(input[x]) == "a") and (str(input[x + 1]).isnumeric() == True)):
-                        input[x] = " "
+                        input[x] = ""
             except:
                 errorCounter = errorCounter + 1
             if(str(input[x]) == "and"):
@@ -175,13 +176,20 @@ class DataPreProcessor:
                                         input[afterAndIndex + 1] = str(finalValue)
                             except:
                                     errorCounter = errorCounter + 1
-        self.input = self.array2String(input)          
+        print(input)
+        self.input = self.array2String(input)
+        print(self.input)
+                  
         return
 
     # Remove all numeric characters. - Kishore
-    def removeNumbers(self):
-        self.input = ''.join([i for i in self.input if not i.isdigit()])
-        self.input = (self.input).replace("_", " ")
+    def removeNumbers(self):   
+        input = self.string2Array(self.input)
+        for x in range(0,len(input)):
+           if((str(input[x]).isnumeric() == True)):
+               input[x] = " "         
+        self.input = self.array2String(input) 
+        #input = ''.join([i for i in input if not i.isdigit()])
         return
 
 
