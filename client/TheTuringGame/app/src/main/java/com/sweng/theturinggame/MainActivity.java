@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         // when the 'Play' button is clicked ...
         findViewById(R.id.buttonPlay).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //startActivity(new Intent(MainActivity.this, TestActivity.class));
+                startActivity(new Intent(MainActivity.this, PlayActivity.class));
             }
         });
 
