@@ -13,7 +13,7 @@ def main():
 
     personality = None
 
-    # This will be randomly assigned between teenager, young adult and adult with a random name each time.
+    # Personality is randomly assigned between teenager, young adult and adult with a random name each time.
     perNum = random.randint(1, 3)
     if perNum == 1:
         personality = Teenager("Jane Doe")

@@ -6,7 +6,7 @@ class TestDataPreProcessor(unittest.TestCase):#pip3 install -U -r requirements.t
 
     # Test convert accented chars function - Diego 
 
-       # def test_ConvertChar(self):  
+    def test_ConvertChar(self):  
         testInput = 'æ'
         preProcessor = DataPreProcessor(testInput)
         preProcessor.convertAccentedCharsToAscii()
@@ -23,7 +23,7 @@ class TestDataPreProcessor(unittest.TestCase):#pip3 install -U -r requirements.t
         preProcessor = DataPreProcessor(testInput)
         preProcessor.convertAccentedCharsToAscii()
         testInput = preProcessor.input
-        self.assertEqual(testInput, i) 
+        self.assertEqual(testInput, 'i') 
 
         testInput = 'Ø'
         preProcessor = DataPreProcessor(testInput)
@@ -47,13 +47,13 @@ class TestDataPreProcessor(unittest.TestCase):#pip3 install -U -r requirements.t
 
     # Test convert number word to digit - Luiz Fellipe
     def test_NumWordToDigit(self):
-        
         testInput = 'fsd'
         preProcessor = DataPreProcessor(testInput)
         preProcessor.convertNumberWordToDigit()
         testInput = preProcessor.input
         self.assertEqual(testInput, 'fsd')
 
+        # FAILS THIS TEST
         testInput = 'one.two'
         preProcessor = DataPreProcessor(testInput)
         preProcessor.convertNumberWordToDigit()
@@ -65,8 +65,9 @@ class TestDataPreProcessor(unittest.TestCase):#pip3 install -U -r requirements.t
         preProcessor = DataPreProcessor(testInput)
         preProcessor.convertNumberWordToDigit()
         testInput = preProcessor.input
-        self.assertEqual(testInput,1) 
+        self.assertEqual(testInput, '1') 
 
+        # FAILS THIS TEST
         testInput = 'one two'
         preProcessor = DataPreProcessor(testInput)
         preProcessor.convertNumberWordToDigit()
@@ -77,7 +78,7 @@ class TestDataPreProcessor(unittest.TestCase):#pip3 install -U -r requirements.t
         preProcessor = DataPreProcessor(testInput)
         preProcessor.convertNumberWordToDigit()
         testInput = preProcessor.input
-        self.assertEqual(testInput,12) 
+        self.assertEqual(testInput, '12') 
 
         testInput = 'one or three'
         preProcessor = DataPreProcessor(testInput)

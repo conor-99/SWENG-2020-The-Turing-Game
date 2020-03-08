@@ -13,6 +13,6 @@ class Adult(Personality):
         return output
 
     # The returned string from the AI model does not have any punctuation. 
-    # This function needs to add punction to that string and return. - Diego
+    # This function needs to add punction to that string and return it. - Diego
     def addPunctuation(self, input):
         return 
