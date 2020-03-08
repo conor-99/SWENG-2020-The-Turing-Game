@@ -15,15 +15,16 @@ class DataPreProcessor:
     def processInput(self):
         self.convertAccentedCharsToAscii()
         self.removeNumbers()
-        #self.convertNumberWordToDigit()
         # This is only relevant because of the weird library
         self.input = str(self.input)
         self.autoCorrect()
         self.convertNumberWordToDigit()
         return
 
-    # Rids the input of spelling mistakes, replacing with the most similar correctly spellled word
+    # Rids the input of spelling mistakes, replacing with the most similar correctly spelled word
     def autoCorrect(self):
+        if str(self.input).isspace():
+            return
         spellchecker = SpellChecker()
         input = self.string2Array(self.input)
         spellchecker.unknown(input)
@@ -60,7 +61,7 @@ class DataPreProcessor:
         string = string[0:-1]
         return string
 
-    # Change accented characters eg. é to e. - Diego
+    # Change accented characters eg. é to e. 
     def convertAccentedCharsToAscii(self):
         self.input = re.sub(r'[àáâãäåæÀÁÂÃÄÅÆ]', 'a', self.input)
         self.input = re.sub(r'[èéêëÈÉÊË]', 'e', self.input)
@@ -70,7 +71,7 @@ class DataPreProcessor:
         self.input = re.sub(r'[ýÿŷÝŸ]', 'y', self.input)
         return
 
-    # Convert one to 1. - Kishore
+    # Convert one to 1. 
     def convertNumberWordToDigit(self):
         units = [
         "zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
@@ -90,14 +91,14 @@ class DataPreProcessor:
                         test = str(w2n.word_to_num(input[x+1]))                   
                         for a in scales:
                             if((str(input[x+1])) == a):                                           
-                                            try:
-                                                    test = w2n.word_to_num(input[x+2])
-                                                    input [x+2] = str(w2n.word_to_num(input[x]) * w2n.word_to_num(input[x+1])* w2n.word_to_num(input[x+2]))
-                                                    input[x]= ""
-                                                    input[x + 1]= ""
-                                            except:                                    
-                                                    input[x + 1] = str(w2n.word_to_num(input[x]) * w2n.word_to_num(input[x+1]))
-                                                    input[x]= ""                                                    
+                                try:
+                                    test = w2n.word_to_num(input[x+2])
+                                    input [x+2] = str(w2n.word_to_num(input[x]) * w2n.word_to_num(input[x+1])* w2n.word_to_num(input[x+2]))
+                                    input[x]= ""
+                                    input[x + 1]= ""
+                                except:                                    
+                                    input[x + 1] = str(w2n.word_to_num(input[x]) * w2n.word_to_num(input[x+1]))
+                                    input[x]= ""                                                    
                     except:                       
                         input[x] = str(w2n.word_to_num(input[x]))
             for z in tens:            
@@ -106,35 +107,34 @@ class DataPreProcessor:
                         test = w2n.word_to_num(input[x+1])
                         for b in units:
                             if(str(input[x+1]) == b):                                            
-                                    input [x+1] = str(w2n.word_to_num(input[x]) + w2n.word_to_num(input[x+1]))
-                                    input[x]= ""                                                                  
-                                    for c in scales:                                        
-                                        try:
-                                            if((str(input[x+2])) == c):                                            
-                                                try:
-                                                        test = w2n.word_to_num(input[x+3])
-                                                        input [x + 3] = str(w2n.word_to_num(input[x + 1]) * w2n.word_to_num(input[x+2])* w2n.word_to_num(input[x+3]))
-                                                        input[x + 1]= ""
-                                                        input[x + 2]= ""
-                                                except:                                    
-                                                        input[x + 2] = str(w2n.word_to_num(input[x + 1]) * w2n.word_to_num(input[x+2]))
-                                                        input[x + 1]= ""  
-                                        except: 
-                                                errorCounter = errorCounter + 1
+                                input [x+1] = str(w2n.word_to_num(input[x]) + w2n.word_to_num(input[x+1]))
+                                input[x]= ""                                                                  
+                                for c in scales:                                        
+                                    try:
+                                        if((str(input[x+2])) == c):                                            
+                                            try:
+                                                test = w2n.word_to_num(input[x+3])
+                                                input [x + 3] = str(w2n.word_to_num(input[x + 1]) * w2n.word_to_num(input[x+2])* w2n.word_to_num(input[x+3]))
+                                                input[x + 1]= ""
+                                                input[x + 2]= ""
+                                            except:                                    
+                                                input[x + 2] = str(w2n.word_to_num(input[x + 1]) * w2n.word_to_num(input[x+2]))
+                                                input[x + 1]= ""  
+                                    except: 
+                                        errorCounter = errorCounter + 1
 
                         for d in scales: 
                             if((str(input[x+1])) == d):                                            
-                                            try:
-                                                    test = w2n.word_to_num(input[x+2])
-                                                    input [x + 2] = str(w2n.word_to_num(input[x]) * w2n.word_to_num(input[x+1])* w2n.word_to_num(input[x+2]))
-                                                    input[x]= ""
-                                                    input[x + 1]= ""
-                                            except:
-                                    
-                                                    input[x + 1] = str(w2n.word_to_num(input[x]) * w2n.word_to_num(input[x+1]))
-                                                    input[x]= ""                                                                                                                       
+                                try:
+                                    test = w2n.word_to_num(input[x+2])
+                                    input [x + 2] = str(w2n.word_to_num(input[x]) * w2n.word_to_num(input[x+1])* w2n.word_to_num(input[x+2]))
+                                    input[x]= ""
+                                    input[x + 1]= ""
+                                except:
+                                    input[x + 1] = str(w2n.word_to_num(input[x]) * w2n.word_to_num(input[x+1]))
+                                    input[x]= ""                                                                                                                       
                     except:
-                                                    input [x] = str(w2n.word_to_num(input[x]))            
+                        input [x] = str(w2n.word_to_num(input[x]))            
         andIndex = 0
         beforeAndIndex =0
         afterAndIndex = 0
@@ -145,10 +145,10 @@ class DataPreProcessor:
         for x in range(len(input)):                             
             try:
                 if((str(input[x]) == "a") and (str(input[x + 1]) == "a")):
-                        input[x] = ""
-                        input[x+1] = ""
+                    input[x] = ""
+                    input[x+1] = ""
                 if((str(input[x]) == "a") and (str(input[x + 1]).isnumeric() == True)):
-                        input[x] = ""
+                    input[x] = ""
             except:
                 errorCounter = errorCounter + 1
             if(str(input[x]) == "and"):
@@ -156,28 +156,27 @@ class DataPreProcessor:
                 beforeAndIndex = x - 1
                 afterAndIndex = x + 1                                
                 if(input[beforeAndIndex].isnumeric() == True):
-                        valueBeforeAndIndex = int(str(input[beforeAndIndex]))                
-                        if(valueBeforeAndIndex > 99):
-                            input[andIndex] = ""
-                            try:
-                                if(input[afterAndIndex].isnumeric() == True):                                
-                                    valueAfterAndIndex = int(str(input[afterAndIndex]))
-                                    finalValue = valueBeforeAndIndex  + valueAfterAndIndex
-                                    input[beforeAndIndex] = ""
-                                    input[afterAndIndex] = str(finalValue)
-                            except:
-                                    errorCounter = errorCounter + 1                                  
-                            try:
-                                    if(input[afterAndIndex + 1].isnumeric() == True):                              
-                                
-                                        valueAfterAndIndex = int(str(input[afterAndIndex + 1]))
-                                        finalValue = valueBeforeAndIndex  + valueAfterAndIndex
-                                        input[beforeAndIndex] = ""
-                                        input[afterAndIndex + 1] = str(finalValue)
-                            except:
-                                    errorCounter = errorCounter + 1      
+                    valueBeforeAndIndex = int(str(input[beforeAndIndex]))                
+                    if(valueBeforeAndIndex > 99):
+                        input[andIndex] = ""
+                        try:
+                            if(input[afterAndIndex].isnumeric() == True):                                
+                                valueAfterAndIndex = int(str(input[afterAndIndex]))
+                                finalValue = valueBeforeAndIndex  + valueAfterAndIndex
+                                input[beforeAndIndex] = ""
+                                input[afterAndIndex] = str(finalValue)
+                        except:
+                                errorCounter = errorCounter + 1                                  
+                        try:
+                            if(input[afterAndIndex + 1].isnumeric() == True):                              
+                                valueAfterAndIndex = int(str(input[afterAndIndex + 1]))
+                                finalValue = valueBeforeAndIndex  + valueAfterAndIndex
+                                input[beforeAndIndex] = ""
+                                input[afterAndIndex + 1] = str(finalValue)
+                        except:
+                                errorCounter = errorCounter + 1      
         self.input = self.array2String(input)
-        self.input = re.sub(' +', ' ',self.input)                
+        self.input = re.sub(' +', ' ',self.input)   
         return
 
     # Remove all numeric characters. - Kishore
