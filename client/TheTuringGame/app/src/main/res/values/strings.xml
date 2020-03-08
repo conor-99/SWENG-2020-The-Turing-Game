@@ -3,6 +3,7 @@
     <string name="buttonPlay">Play</string>
     <string name="buttonLeaderboards">Leaderboards</string>
     <string name="buttonSettings">Settings</string>
+    <string name="imageLogoDescription">The Turing Game Logo</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Preference Titles -->
