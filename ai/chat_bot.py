@@ -50,6 +50,8 @@ def arrangeResp(userInput, personality):
     response = ai.respond(processedInput, 1)
     response = preProcessor.array2String(response)
     # postProcessor = DataPostProcessor(response, personality)
+    postProcessor = DataPostProcessor(processedInput, personality)
+    postProcessor.postProcess()
 
     return response
 
