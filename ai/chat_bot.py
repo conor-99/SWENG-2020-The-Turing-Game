@@ -15,14 +15,19 @@ def main():
 
     personality = None
 
+    # random name generator
+    with open("names.txt") as word_file:
+        names = word_file.read().split()
+        name = random.choice(names)
+
     # Personality is randomly assigned between teenager, young adult and adult with a random name each time.
     perNum = random.randint(1, 3)
     if perNum == 1:
-        personality = Teenager("Jane Doe")
+        personality = Teenager(name)
     elif perNum == 2:
-        personality = YoungAdult("James Doe")
+        personality = YoungAdult(name)
     else:
-        personality = Adult("Janet Doe")
+        personality = Adult(name)
 
     while(1):
         userInput = input()
