@@ -4,6 +4,8 @@ from teenager import Teenager
 from young_adult import YoungAdult
 from adult import Adult
 from data_post_processor import DataPostProcessor
+from ai_brain import AI
+
 import random
 
 # Takes input from commandline, processes it, displays processed output via commandline.
@@ -36,20 +38,22 @@ def main():
     print('\033[92m' + "Program exited." + '\033[0m')
 
 def arrangeResp(userInput, personality):
+    #Creating our AI
+    ai = AI("James")
     # Where output is the processed output.
     preProcessor = DataPreProcessor(userInput)
     preProcessor.processInput()
-    
+
     # This is passed to the model.
     processedInput = preProcessor.input
+    # Receive response from the model
+    response = ai.respond(processedInput, 1)
+    response = preProcessor.array2String(response)
+    # postProcessor = DataPostProcessor(response, personality)
+    postProcessor = DataPostProcessor(processedInput, personality)
+    postProcessor.postProcess()
 
-    # processedInput = modelOutput
-
-    # Output of model is passed to data post processor.
-    # postProcessor = DataPostProcessor(processedInput, personality)
-
-    return processedInput
-
+    return response
 
 if __name__ == '__main__':
     main()

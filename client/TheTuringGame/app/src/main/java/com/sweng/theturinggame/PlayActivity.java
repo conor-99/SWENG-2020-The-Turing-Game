@@ -12,7 +12,7 @@ public class PlayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
 
-        API.receiveMessage(123);
+        //API.receiveMessage(123);
 
     }
 }

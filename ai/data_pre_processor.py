@@ -94,7 +94,7 @@ class DataPreProcessor:
         self.input = re.sub(' +', ' ',self.input)  
         return
 
-    # Remove all numeric characters. - Kishore
+    # Remove all numeric characters. 
     def removeNumbers(self): 
         input = self.string2Array(self.input)
         for x in range(0,len(input)):
@@ -103,5 +103,3 @@ class DataPreProcessor:
         self.input = self.array2String(input)
         self.input = re.sub(' +', ' ',self.input) 
         return
-
-

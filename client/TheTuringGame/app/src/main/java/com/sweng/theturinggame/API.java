@@ -87,8 +87,6 @@ public class API {
         @Override
         protected void onPostExecute(JSONObject response) {
 
-
-
         }
 
         private JSONObject httpGet(String route) {
