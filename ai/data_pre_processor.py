@@ -19,7 +19,15 @@ class DataPreProcessor:
         self.input = str(self.input)
         self.autoCorrect()
         self.removeNumWords()
-        return
+        return self.checkLength()
+
+    # Checks the input string to make sure we are working with more than three words
+    # This is the minimum amount that will (almost) guarantee a response from the AI
+    def checkLength(self):
+        if len(self.string2Array(self.input)) < 3:
+            return False
+        else:
+            return True
 
     # Rids the input of spelling mistakes, replacing with the most similar correctly spelled word
     def autoCorrect(self):
@@ -89,7 +97,6 @@ class DataPreProcessor:
                         input[x] = " "
                     except:
                         errorCounter = errorCounter + 1               
-        print(input)
         self.input = self.array2String(input)
         self.input = re.sub(' +', ' ',self.input)  
         return

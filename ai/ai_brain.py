@@ -47,7 +47,7 @@ class AI:
             embedding_layer=tl.layers.Embedding(vocabulary_size=self.vocabulary_size, embedding_size=self.emb_dim),
             )
 
-        load_weights = tl.files.load_npz(name='model.npz')
+        load_weights = tl.files.load_npz(name="data/model.npz")
         tl.files.assign_weights(load_weights, self.model_)
 
     def respond(self, seed, number):
@@ -60,4 +60,7 @@ class AI:
             if w == 'end_id':
                 break
             sentence = sentence + [w]
+
+        if sentence == []:
+            sentence = ["I'm", "sorry,", "I", "just", "don't", "quite", "understand", "what", "you're", "asking..."]
         return sentence
