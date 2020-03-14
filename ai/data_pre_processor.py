@@ -6,7 +6,6 @@ from word2number import w2n
 from string import digits
 
 class DataPreProcessor:
-    input = 0
     # Creates an instance of the preprocessor with input being input from commandline passed to it from main class.
     def __init__(self, input):
         self.input = input
@@ -65,7 +64,7 @@ class DataPreProcessor:
     def array2String(self, array):
         string = ""
         for x in array:
-            string += x + " "
+            string += str(x) + " "
         string = string[0:-1]
         return string
 
