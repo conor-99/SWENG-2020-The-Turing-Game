@@ -22,7 +22,6 @@ public class MainActivity {
 			System.out.println("Failed authenticating the server");
 			e.printStackTrace();
 		}	
-		while(true) {}
 	}
 	
 	private static void authenticateServer() throws IOException {
