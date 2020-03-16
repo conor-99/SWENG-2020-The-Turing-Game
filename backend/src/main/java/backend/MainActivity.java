@@ -51,7 +51,6 @@ public class MainActivity {
 		  }
 		});
 	}
-
 }
 
 //FEEDBACK UPLOAD PART
@@ -77,6 +76,7 @@ public class MainActivity {
 
 
 // AUTHENTICATION PART
+
 //Firebase atributes
 //private FirebaseAuth mAuth;
 //private FirebaseUser mCurrentUser;
