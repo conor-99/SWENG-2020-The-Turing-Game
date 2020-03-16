@@ -27,7 +27,7 @@ public class MainActivity {
 	
 	private static void authenticateServer() throws IOException {
 		// Fetch the service account key JSON file contents
-		FileInputStream serviceAccount = new FileInputStream("src/main/resources/turing-game-e5059-firebase-adminsdk-eata7-4d6eb69ec9.json");
+		FileInputStream serviceAccount = new FileInputStream("serverKeys.json");
 
 		// Initialize the app with a service account, granting admin privileges
 		FirebaseOptions options = new FirebaseOptions.Builder()
