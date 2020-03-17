@@ -20,11 +20,13 @@ public class ResultActivity extends AppCompatActivity {
             user_choice = c.getInt("choice");
 
             if(user_choice == correct_choice){
+                findViewById(R.id.incorrect_title).setVisibility(View.INVISIBLE);
                 findViewById(R.id.correct_title).setVisibility(View.VISIBLE);
                 //also update score;
             }
 
             else{
+                findViewById(R.id.correct_title).setVisibility(View.INVISIBLE);
                 findViewById(R.id.incorrect_title).setVisibility(View.VISIBLE);
             }
 
