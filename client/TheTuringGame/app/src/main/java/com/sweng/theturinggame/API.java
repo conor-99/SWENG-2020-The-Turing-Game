@@ -44,7 +44,7 @@ public class API {
 
     }
 
-    public static Message receiveMessage(int conversationId) {
+    private static Message receiveMessageRaw(int conversationId) {
 
         String route = "conversation_receive.json"; // for testing
         //String route = String.format("conversation/receive/%d", conversationId);
@@ -53,6 +53,14 @@ public class API {
         new Request().execute(params);
 
         return new Message(0, "", new Date());
+
+    }
+
+    public static Message receiveMessage(int conversationId) {
+
+        Message message = receiveMessageRaw(conversationId);
+        message.text = Personality.apply(conversationId, message.text);
+        return message;
 
     }
 
