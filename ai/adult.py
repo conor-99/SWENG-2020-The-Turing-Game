@@ -22,6 +22,10 @@ class Adult(Personality):
         input = input.replace('heya', 'heya!')
         input = input.replace('hey', 'hey,')
         input = input.replace('greetings', 'greetings,')
+        input = input.replace('good morning', 'good morning,')
+        input = input.replace('good evening', 'good evening,')
+        input = input.replace('good afternoon', 'good afternoon!')
+    
 
         #Words ending in nt 
         input = input.replace('isnt', 'isn^t')
