@@ -93,51 +93,6 @@ public class MainActivity {
 //
 //}
 
-
-// AUTHENTICATION PART
-
-//Firebase atributes
-//private FirebaseAuth mAuth;
-//private FirebaseUser mCurrentUser;
-//private FirebaseAuth.AuthStateListener mAuthListener;
-//
-///**
-// * Method to initialise Firebase services, might e needed for use in other activities
-// * created: 30/03/2019 by J.Cistiakovas
-// * last modified:
-// */
-//private void createFirebaseServices() {
-//    //Firebase anonymous Auth
-//    FirebaseApp.initializeApp(this);
-//    mAuth = FirebaseAuth.getInstance();
-//    //listener that listens for change in the Auth state
-//    mAuthListener = new FirebaseAuth.AuthStateListener() {
-//        @Override
-//        public void onAuthStateChanged(@NonNull final FirebaseAuth firebaseAuth) {
-//            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-//            //check if user is already signed in
-//            if (currentUser == null) {
-//                mAuth.signInAnonymously().addOnCompleteListener(home_screen.this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()) {
-//                            mCurrentUser = firebaseAuth.getCurrentUser();
-//                        } else {
-//                            //TODO: fail the program or do something here
-//                        }
-//                    }
-//                });
-//            } else {
-//                //user is signed in - happy days
-//                mCurrentUser = currentUser;
-//                Log.d(TAG, "User already signed in. User id : " + mCurrentUser.getUid());
-//
-//            }
-//        }
-//    };
-//    mAuth.addAuthStateListener(mAuthListener);
-//}
-
 // ACTUAL DATA UPLOAD PART
 ////Firebase atributes
 //private FirebaseAuth mAuth;
