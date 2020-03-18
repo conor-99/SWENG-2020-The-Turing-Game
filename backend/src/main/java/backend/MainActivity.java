@@ -29,6 +29,11 @@ public class MainActivity {
 		}	
 	}
 	
+	/**
+	 * Main method for verifying our server
+	 * Should be called during initialization.
+	 * @throws IOException
+	 */
 	private static void authenticateServer() throws IOException {
 		// Fetch the service account key JSON file contents
 		FileInputStream serviceAccount = new FileInputStream("serverKeys.json");
@@ -66,7 +71,7 @@ public class MainActivity {
 	 */
 	static String checkUserAuthentication(String idToken) throws FirebaseAuthException {
 		FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
-		System.out.println("Successfully verified the user with toke: "+idToken);
+		System.out.println("Successfully verified the user with token: "+idToken);
 		String userID = decodedToken.getUid();
 		return userID;
 	}
