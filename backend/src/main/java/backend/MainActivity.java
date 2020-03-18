@@ -2,10 +2,15 @@ package backend;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
+import com.google.firebase.auth.UserRecord;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,6 +54,21 @@ public class MainActivity {
 		  public void onCancelled(DatabaseError error) {
 		  }
 		});
+	}
+	
+	/**
+	 * Method for verifying if incoming token is a logged in user.
+	 * If yes, it returns the userID of that user
+	 * NOTE: idToken != userID
+	 * @param idToken
+	 * @return userID
+	 * @throws FirebaseAuthException 
+	 */
+	static String checkUserAuthentication(String idToken) throws FirebaseAuthException {
+		FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
+		System.out.println("Successfully verified the user with toke: "+idToken);
+		String userID = decodedToken.getUid();
+		return userID;
 	}
 }
 
