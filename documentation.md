@@ -233,6 +233,14 @@ curl -X GET localhost/api/leaderboards
 
 ## Authentication
 
+### Introduction
 Firebase provides built-in method to authenticate users using Google Sign-In. It requires SHA1 fingerprint (should be there now) and generates UserID for a logged in user. 
 UserID is persistent, i.e it is unique for a specific user and will be the same on each log in.
 It will be used to associate data with a specific user.
+
+### API
+
+When user is logged in on front end, he should be assigned the session token.
+This token will be used by back-end to verify the user and proceed with data transfer.
+API should be set up like in the documentation below:
+[Firebase token verification guide](https://firebase.google.com/docs/auth/admin/verify-id-tokens "Firebase documentation")
