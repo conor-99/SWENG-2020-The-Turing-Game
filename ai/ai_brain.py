@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 import os
 # This prevents the incredibly verbose logging that usually accompanies tensorflow from appearing in terminal
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = "3"
+# This should force CPU-only usage
+os.environ['CUDA_VISIBLE_DEVICES'] = "-1"
 
 import tensorflow as tf
 import tensorlayer as tl
