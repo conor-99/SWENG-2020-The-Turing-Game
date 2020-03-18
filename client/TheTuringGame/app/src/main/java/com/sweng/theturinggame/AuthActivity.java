@@ -1,13 +1,11 @@
 package com.sweng.theturinggame;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.annotation.NonNull;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.util.Log;
-
-import androidx.annotation.NonNull;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -23,6 +21,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class AuthActivity extends AppCompatActivity {
 
+    private final String CLIENT_OAUTH_TOKEN = "656823049926-lc47e9hig7u0ib5n6oo1uub2b750grh7.apps.googleusercontent.com";
     private final int RC_SIGN_IN = 9001;
 
     private FirebaseAuth mAuth;
@@ -42,7 +41,7 @@ public class AuthActivity extends AppCompatActivity {
         });
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("656823049926-lc47e9hig7u0ib5n6oo1uub2b750grh7.apps.googleusercontent.com")
+                .requestIdToken(CLIENT_OAUTH_TOKEN)
                 .requestEmail()
                 .build();
 
