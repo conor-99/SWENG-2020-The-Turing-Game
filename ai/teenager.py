@@ -32,10 +32,14 @@ class Teenager(Personality):
             'you' : 'u',
             }       
         
-        input = self.string2Array(self.input)    
+        input = self.string2Array(input)    
         for x in range(0,len(input)):
             for y in shortWords:
                 if(str(input[x]) == y):
                     input[x] = shortWords[y]
         self.input = self.array2String(input)               
-        return
+        return input
+
+    # Add appropriate emojis - Luiz Fellipe
+    def addEmojis(self, input):
+        return input
