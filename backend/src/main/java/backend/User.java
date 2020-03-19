@@ -31,5 +31,28 @@ public class User
 		this.score = score;
 	}
 
+	public void setRank(int newRank) {
+		rank = newRank;
+	}
+
+	public int getRank() {
+		return rank;
+	}
+
+	public void setUserName(String newUserName) {
+		username = newUserName;
+	}
+
+	public String getUserName() {
+		return username;
+	}
+
+	public void setScore(Double newScore) {
+		score = newScore;
+	}
+
+	public Double getScore() {
+		return score;
+	}
 }
 
