@@ -54,5 +54,39 @@ public class User
 	public Double getScore() {
 		return score;
 	}
+	
+	@Override
+	public String toString() {
+		return "\n{\n    rank: " + rank +",\n"
+				+"    username: " + username +",\n"
+				+ "    score: " + score + "\n}";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(username, score);
+	}
+
+
+	public static void sort(Set<User> list){
+		List<User> users = new ArrayList<>();
+		users.addAll(list);
+
+		Collections.sort(users, new Comparator<User>(){
+
+
+			@Override
+			public int compare(User obj1, User obj2) {
+
+				return obj2.score.compareTo(obj1.score);
+			}});
+
+		list.clear();
+		list.addAll(users);  
+		for(int i=0; i<users.size(); i++) {
+			users.get(i).rank = i; //+1?
+		}
+	}
+
 }
 
