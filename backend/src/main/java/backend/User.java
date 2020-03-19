@@ -14,5 +14,22 @@ public class User
 	String username;
 	Double score;
 
+	User(String username){
+		this.rank = -1;
+		this.username = username;
+		this.score = 0.0;
+	}
+
+	User(String username, Double score){
+		this.username = username;
+		this.score = score;
+	}
+	
+	User(int rank, String username, Double score){
+		this.rank = rank;
+		this.username = username;
+		this.score = score;
+	}
+
 }
 
