@@ -87,6 +87,30 @@ public class User
 			users.get(i).rank = i; //+1?
 		}
 	}
+	
+	// testing
+	public static void main(String[] args) {
+		User obj1 = new User("john");
+		User obj2 = new User("XXX", 0.697); 
+		User obj3 = new User("Roy", 0.72);
+		User obj4 = new User("derrick", 0.95);
+		User obj5 = new User("holly", 0.11);
+		User obj6 = new User("Alex");
+
+
+		Set<User> list = new LinkedHashSet<>();
+
+		list.add(obj1); 
+		list.add(obj2); 
+		list.add(obj3);
+		list.add(obj4); 
+		list.add(obj5); 
+		list.add(obj6);
+
+		sort(list);
+		System.out.println("\n\"users\": \n" + list);
+
+	}
 
 }
 
