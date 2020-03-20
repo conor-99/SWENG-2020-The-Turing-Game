@@ -34,7 +34,7 @@ public class ResultActivity extends AppCompatActivity {
             findViewById(R.id.survey_button).setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
-                    startActivity(new Intent(ResultActivity.this, MainActivity.class)); //replace with survey activity
+                    startActivity(new Intent(ResultActivity.this, SurveyActivity.class));
                 }
             });
 
