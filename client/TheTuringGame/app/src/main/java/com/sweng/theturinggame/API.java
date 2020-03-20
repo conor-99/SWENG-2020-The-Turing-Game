@@ -14,6 +14,8 @@ import java.util.Dictionary;
 
 public class API {
 
+    private static int conversationId;
+
     public static int startConversation() {
 
         String route = "conversation_start.json"; // for testing
@@ -22,29 +24,34 @@ public class API {
         RequestParameters params = new RequestParameters(route);
         new Request().execute(params);
 
-        return 123;
+        conversationId = 123;
+        return conversationId;
 
     }
 
-    public static void endConversation(int conversationId, int guess) {
+    public static int getConversationId() {
+        return conversationId;
+    }
+
+    public static void endConversation(int guess) {
 
         String route = String.format("conversation/end/%d", conversationId);
 
     }
 
-    public static void flagConversation(int conversationId) {
+    public static void flagConversation() {
 
         String route = String.format("conversation/flag/%d", conversationId);
 
     }
 
-    public static void sendMessage(int conversationId, String text) {
+    public static void sendMessage(String text) {
 
         String route = String.format("conversation/send/%d", conversationId);
 
     }
 
-    private static Message receiveMessageRaw(int conversationId) {
+    private static Message receiveMessageRaw() {
 
         String route = "conversation_receive.json"; // for testing
         //String route = String.format("conversation/receive/%d", conversationId);
@@ -56,19 +63,19 @@ public class API {
 
     }
 
-    public static Message receiveMessage(int conversationId) {
+    public static Message receiveMessage() {
 
-        Message message = receiveMessageRaw(conversationId);
+        Message message = receiveMessageRaw();
         message.text = Personality.apply(conversationId, message.text);
         return message;
 
     }
 
-    public static void guessConversantType(int conversationId, ConversantType type) {
+    public static void guessConversantType(ConversantType type) {
 
     }
 
-    public static ConversantType getConversantType(int conversationId) {
+    public static ConversantType getConversantType() {
         return ConversantType.Bot;
     }
 
