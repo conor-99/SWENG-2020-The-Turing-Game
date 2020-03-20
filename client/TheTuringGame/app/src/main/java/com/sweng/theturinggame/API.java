@@ -64,6 +64,18 @@ public class API {
 
     }
 
+    public static void guessConversantType(int conversationId, ConversantType type) {
+
+    }
+
+    public static ConversantType getConversantType(int conversationId) {
+        return ConversantType.Bot;
+    }
+
+    public static void submitSurveyResults(int rating, String feedback) {
+
+    }
+
     public static UserRanking[] getLeaderboards() {
 
         String route = "leaderboards.json"; // for testing
