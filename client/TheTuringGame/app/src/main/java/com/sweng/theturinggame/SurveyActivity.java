@@ -1,11 +1,8 @@
 package com.sweng.theturinggame;
 
 import androidx.appcompat.app.AppCompatActivity;
-<<<<<<< HEAD
 
 import android.content.Intent;
-=======
->>>>>>> 0c4b0eab51dec1499a84663cd1df9bb1401f4861
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +26,6 @@ public class SurveyActivity extends AppCompatActivity {
                 // get values and then displayed in a toast
                 String totalStars = "Total Stars:: " + simpleRatingBar.getNumStars();
                 String rating = "Rating :: " + simpleRatingBar.getRating();
-<<<<<<< HEAD
                 //was used to test if the rating was correct
                 //Toast.makeText(getApplicationContext(), totalStars + "\n" + rating, Toast.LENGTH_LONG).show();
             }
@@ -41,19 +37,9 @@ public class SurveyActivity extends AppCompatActivity {
                 startActivity(new Intent(SurveyActivity.this, MainActivity.class));
             }
         });
+
     }
 
     //cant find API.submitSurveyResults() method.
+
 }
-=======
-                Toast.makeText(getApplicationContext(), totalStars + "\n" + rating, Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-   /*@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_survey);
-    }*/
-}
->>>>>>> 0c4b0eab51dec1499a84663cd1df9bb1401f4861
