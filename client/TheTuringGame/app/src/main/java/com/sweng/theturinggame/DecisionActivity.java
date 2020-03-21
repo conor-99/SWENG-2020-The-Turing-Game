@@ -20,7 +20,7 @@ public class DecisionActivity extends AppCompatActivity {
         findViewById(R.id.hp_button).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                openResult(0);
+                openResult("Human");
             }
         });
 
@@ -28,15 +28,15 @@ public class DecisionActivity extends AppCompatActivity {
         findViewById(R.id.ai_button).setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                openResult(1);
+                openResult("Bot");
             }
         });
     }
 
-    public void openResult(int choice){
+    public void openResult(String choice){
         Intent intent = new Intent(this, Result.class);
         Bundle c = new Bundle();
-        c.putInt("choice", choice); //Your id
+        c.putString("choice", choice);
         intent.putExtras(c);
         startActivity(intent);
         finish();
