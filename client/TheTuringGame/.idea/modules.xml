@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/The Turing Game.iml" filepath="$PROJECT_DIR$/The Turing Game.iml" group="The Turing Game" />
       <module fileurl="file://$PROJECT_DIR$/.idea/TheTuringGame.iml" filepath="$PROJECT_DIR$/.idea/TheTuringGame.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TheTuringGame-The Turing Game.iml" filepath="$PROJECT_DIR$/TheTuringGame-The Turing Game.iml" group="The Turing Game" />
+      <module fileurl="file://$PROJECT_DIR$/app/TheTuringGame-app.iml" filepath="$PROJECT_DIR$/app/TheTuringGame-app.iml" group="The Turing Game/app" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="The Turing Game/app" />
     </modules>
   </component>
