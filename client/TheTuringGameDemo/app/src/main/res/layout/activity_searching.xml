@@ -6,4 +6,33 @@
     android:layout_height="match_parent"
     tools:context=".SearchingActivity">
 
+    <TextView
+        android:id="@+id/searching_text_searching"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="473dp"
+        android:layout_marginBottom="237dp"
+        android:text="@string/searching_text_searching"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/searching_progress_spinner"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/searching_progress_spinner"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/searching_progress_spinner"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="281dp"
+        android:layout_height="271dp"
+        android:layout_marginTop="214dp"
+        android:layout_marginBottom="246dp"
+        android:indeterminateDrawable="@drawable/progress"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

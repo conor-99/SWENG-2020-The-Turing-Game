@@ -4,4 +4,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"/>
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/main_button_play"
+        android:layout_width="258dp"
+        android:layout_height="74dp"
+        android:layout_marginTop="396dp"
+        android:layout_marginBottom="261dp"
+        android:text="@string/main_button_play"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/main_image_logo"
+        android:layout_width="404dp"
+        android:layout_height="380dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="335dp"
+        android:contentDescription="@string/main_image_logo_cd"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+    <Button
+        android:id="@+id/main_button_leaderboards"
+        android:layout_width="238dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="482dp"
+        android:layout_marginBottom="187dp"
+        android:text="@string/main_button_leaderboards"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/main_button_settings"
+        android:layout_width="238dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="554dp"
+        android:layout_marginBottom="115dp"
+        android:text="@string/main_button_settings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
