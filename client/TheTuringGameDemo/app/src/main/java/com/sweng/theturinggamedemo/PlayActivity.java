@@ -27,7 +27,7 @@ public class PlayActivity extends AppCompatActivity {
     private MessageAdapter messageAdapter;
     private ListView messageView;
     private int messageNum = 1;
-    private int countdown = 5;//30;
+    private int countdown = 30;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

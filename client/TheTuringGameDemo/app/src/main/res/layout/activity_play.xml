@@ -39,24 +39,31 @@
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:layout_weight="2"
+            android:background="@android:color/transparent"
             android:ems="10"
             android:hint="@string/play_input_text"
             android:importantForAutofill="no"
             android:inputType="text|textCapSentences"
-            android:paddingHorizontal="24dp"
+            android:paddingHorizontal="30dp"
             android:paddingVertical="5dp"
             android:text=""
-            android:textColorHighlight="@android:color/primary_text_dark" />
+            android:textColorHighlight="@android:color/primary_text_dark"
+            android:textColorLink="@android:color/primary_text_dark"
+            android:textCursorDrawable="@null" />
 
         <ImageButton
             android:id="@+id/play_input_send"
+            style="@android:style/Widget.DeviceDefault.Button.Borderless"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:layout_gravity="center"
             android:layout_marginHorizontal="10dp"
-            android:backgroundTint="#eaeaea"
+            android:backgroundTint="#f0f0f0"
             android:contentDescription="@string/play_input_send_cd"
-            android:padding="11dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="11dp"
+            android:paddingRight="11dp"
+            android:paddingBottom="11dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_send_grey_24dp" />
     </LinearLayout>
