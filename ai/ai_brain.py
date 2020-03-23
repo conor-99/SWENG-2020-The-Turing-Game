@@ -57,13 +57,11 @@ class AI:
 
     # Handle the creation of a response from the given input
     def respond(self, seed, number):
-        sentence = self.simpleResponse(seed)
-        # If we can handle a simple question with a simple repsonse, don't trouble the model
-        if sentence is not []:
-            return sentence
+        simpleStart = self.simpleResponse(seed)
         self.model_.eval()
         seed_id = [self.word2idx.get(w, self.unk_id) for w in seed.split(" ")]
         sentence_id = self.model_(inputs=[[seed_id]], seq_length=20, start_token=self.start_id, top_n=number)
+        sentence = []
         for w_id in sentence_id[0]:
             w = self.idx2word[w_id]
             if w == 'end_id':
@@ -72,7 +70,7 @@ class AI:
         # A catch all just in case there are no responses, but we have yet to find an input to trigger this
         if sentence == []:
             sentence = ["I'm", "sorry,", "I", "just", "don't", "quite", "understand", "what", "you're", "asking..."]
-        return sentence
+        return simpleStart + sentence
 
     # Handle simple questions that the AI is less than optimal at answering
     def simpleResponse(self, input):
@@ -104,14 +102,14 @@ class AI:
                 elif value is 1:
                     sentence.append("feeling")
         # Handle a 'how are you' type question with a pre-determined emotional state
-        if tally[1] > 2:
+        if tally[1] > 2 and len(input) < 5:
             sentence.append("I")
             sentence.append("am")
             if randint(0,1) is 1:
                 sentence.append("feeling")
             sentence.append(self.feel)
         # Handle questions about it's name with a simple answer
-        if tally[2] > 2:
+        if tally[2] > 2 and len(input) < 5:
             if randint(0,1) is 1:
                 sentence.append("I")
                 sentence.append("am")
