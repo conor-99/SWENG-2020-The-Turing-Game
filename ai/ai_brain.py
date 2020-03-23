@@ -78,7 +78,7 @@ class AI:
         input = self.preProcessor.string2Array(input)
         tally = [0, 0, 0]
         greetings = ["hello","hi","greetings","salutations","hey","yo","howdy"]
-        name = [["what","who]",["is","are"],["you","your"],["name"]]
+        names = [["what","who"],["is","are"],["you","your"],["name"]]
         wellbeing = [["how"],["do","are"],["you"],["doing","feeling","feel"]]
         # Tallying key words in the user query to determine if certain questions were being asked
         for x in input:
@@ -86,7 +86,7 @@ class AI:
                 if x == greetings[y]:
                     tally[0] = 1
                     break
-            for y in range(len(name)):
+            for y in range(len(names)):
                 for z in names[y]:
                     if x is z:
                         tally[1] = tally[1] + 1
