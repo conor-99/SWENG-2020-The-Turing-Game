@@ -6,4 +6,70 @@
     android:layout_height="match_parent"
     tools:context=".GuessActivity">
 
+    <Button
+        android:id="@+id/guess_button_human"
+        style="@android:style/Widget.DeviceDefault.Button.Borderless"
+        android:layout_width="256dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="510dp"
+        android:layout_marginBottom="190dp"
+        android:background="#f0f0f0"
+        android:text="@string/guess_text_human"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#292929"
+        android:textSize="20sp"
+        android:typeface="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/guess_button_ai"
+        style="@android:style/Widget.DeviceDefault.Button.Borderless"
+        android:layout_width="256dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="597dp"
+        android:layout_marginBottom="103dp"
+        android:background="#f0f0f0"
+        android:text="@string/guess_text_ai"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#292929"
+        android:textSize="20sp"
+        android:typeface="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/guess_image_decision"
+        android:layout_width="294dp"
+        android:layout_height="197dp"
+        android:layout_marginTop="284dp"
+        android:layout_marginBottom="284dp"
+        android:contentDescription="@string/guess_image_guess_cd"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guess_image_logo"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/guess_image_logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/guess" />
+
+    <ImageView
+        android:id="@+id/guess_image_logo"
+        android:layout_width="342dp"
+        android:layout_height="293dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="456dp"
+        android:contentDescription="@string/guess_image_logo_cd"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

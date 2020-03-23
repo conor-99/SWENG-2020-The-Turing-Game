@@ -15,7 +15,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        // when the 'Play' button is clicked
         findViewById(R.id.main_button_play).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

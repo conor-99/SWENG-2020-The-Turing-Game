@@ -6,4 +6,50 @@
     android:layout_height="match_parent"
     tools:context=".ResultActivity">
 
+    <Button
+        android:id="@+id/result_button_menu"
+        style="@android:style/Widget.DeviceDefault.Button.Borderless"
+        android:layout_width="208dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="568dp"
+        android:layout_marginBottom="109dp"
+        android:background="#f0f0f0"
+        android:text="@string/result_text_menu"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#292929"
+        android:textSize="17sp"
+        android:typeface="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/result_image_correct"
+        android:layout_width="408dp"
+        android:layout_height="268dp"
+        android:layout_marginTop="244dp"
+        android:layout_marginBottom="219dp"
+        android:contentDescription="@string/result_image_correct_cd"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/guess_correct" />
+
+    <ImageView
+        android:id="@+id/result_image_logo"
+        android:layout_width="342dp"
+        android:layout_height="293dp"
+        android:layout_marginBottom="438dp"
+        android:contentDescription="@string/result_image_logo_cd"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/result_image_correct"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/result_image_correct"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="62dp"
         android:background="#fcfcfc"
-        android:gravity="center_vertical"
+        android:gravity="center_horizontal|center_vertical"
         android:text="@string/play_text_timer"
         android:textColor="#2a2a2a"
         android:textSize="30sp" />

@@ -3,7 +3,6 @@
 package com.sweng.theturinggamedemo;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,14 +10,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -30,7 +27,7 @@ public class PlayActivity extends AppCompatActivity {
     private MessageAdapter messageAdapter;
     private ListView messageView;
     private int messageNum = 1;
-    private int countdown = 30;
+    private int countdown = 5;//30;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,20 +69,16 @@ public class PlayActivity extends AppCompatActivity {
             public void run() {
 
                 if (countdown < 0) {
-
                     timer.cancel();
-
                     try {
                         Thread.sleep(1000);
                     } catch (Exception ignored) { }
-
                     startActivity(new Intent(PlayActivity.this, GuessActivity.class));
-
+                } else {
+                    String padding = (countdown < 10) ? "0" : "";
+                    timerText.setText(String.format("00:%s%d", padding, countdown));
+                    countdown--;
                 }
-
-                String padding = (countdown < 10) ? "0" : "";
-                timerText.setText(String.format("00:%s%d", padding, countdown));
-                countdown--;
 
             }
         }, 1000, 1000);
