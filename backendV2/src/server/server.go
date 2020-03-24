@@ -50,7 +50,7 @@ func authenticateServer() *firebase.App {
 }
 
 // Method verifies if incoming token is a valid and logged-in users token
-func checkUserAuthentication(idToken string) *auth.Token {
+func checkUserAuthentication(idToken string) (*auth.Token, error) {
 	ctx := context.Background()
 	client, err := app.Auth(ctx)
 	if err != nil {
@@ -59,11 +59,12 @@ func checkUserAuthentication(idToken string) *auth.Token {
 
 	token, err := client.VerifyIDToken(ctx, idToken)
 	if err != nil {
-        log.Fatalf("error verifying ID token: %v\n", err)
+        log.Printf("Error verifying ID token: %v\n", err)
+        return nil, err
 	}
 	
 	log.Printf("Verified ID token: %v\n", token)
-	return token
+	return token, nil
 }
 
 // TODO remove this later
