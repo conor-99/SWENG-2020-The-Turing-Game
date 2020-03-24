@@ -50,7 +50,7 @@ func authenticateServer() *firebase.App {
 }
 
 // Method verifies if incoming token is a valid and logged-in users token
-func checkUserAuthentication(app *firebase.App, idToken string) *auth.Token {
+func checkUserAuthentication(idToken string) *auth.Token {
 	ctx := context.Background()
 	client, err := app.Auth(ctx)
 	if err != nil {
