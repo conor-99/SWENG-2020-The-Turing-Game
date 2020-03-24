@@ -11,8 +11,10 @@ class Teenager(Personality):
         Personality.__init__(self, name)
         self.age = random.randint(13, 21)
         self.probSpellingMistake = random.randint(1,5)
+        
 
     def addPersonality(self, input):
+        
         output = self.shortenWords(input)
         return output
 
@@ -31,15 +33,12 @@ class Teenager(Personality):
             'because' : 'cuz',
             'you' : 'u',
             }       
-        
-        input = self.string2Array(input)    
+        preProcessor = DataPreProcessor(input) 
+        input = preProcessor.string2Array(input)    
         for x in range(0,len(input)):
             for y in shortWords:
                 if(str(input[x]) == y):
                     input[x] = shortWords[y]
-        self.input = self.array2String(input)               
-        return input
-
-    # Add appropriate emojis - Luiz Fellipe
-    def addEmojis(self, input):
+        input = preProcessor.array2String(input)               
+        
         return input
