@@ -8,8 +8,8 @@ import android.view.View;
 
 public class ResultActivity extends AppCompatActivity {
 
-        private int user_choice;
-        private int correct_choice; //fetch correct answer from server
+        private String user_choice;
+        private String correct_choice;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -17,14 +17,17 @@ public class ResultActivity extends AppCompatActivity {
             setContentView(R.layout.activity_result);
 
             Bundle c = getIntent().getExtras();
-            user_choice = c.getInt("choice");
+            user_choice = c.getString("choice");
+            correct_choice = API.getConversantType().toString();
 
-            if(user_choice == correct_choice){
+            //if correct decision made...
+            if(user_choice.equals(correct_choice)){
                 findViewById(R.id.incorrect_title).setVisibility(View.INVISIBLE);
                 findViewById(R.id.correct_title).setVisibility(View.VISIBLE);
                 //also update score;
             }
 
+            //if incorrect decision made...
             else{
                 findViewById(R.id.correct_title).setVisibility(View.INVISIBLE);
                 findViewById(R.id.incorrect_title).setVisibility(View.VISIBLE);
@@ -34,7 +37,8 @@ public class ResultActivity extends AppCompatActivity {
             findViewById(R.id.survey_button).setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
-                    startActivity(new Intent(ResultActivity.this, MainActivity.class)); //replace with survey activity
+                    startActivity(new Intent(ResultActivity.this, SurveyActivity.class));
+                    finish();
                 }
             });
 
@@ -43,6 +47,7 @@ public class ResultActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v){
                     startActivity(new Intent(ResultActivity.this, MainActivity.class));
+                    finish();
                 }
             });
 

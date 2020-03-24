@@ -1,0 +1,25 @@
+<resources>
+
+    <string name="app_name">The Turing Game Demo</string>
+
+    <string name="main_image_logo_cd">The Turing Game logo</string>
+    <string name="main_button_play">PLAY</string>
+    <string name="main_button_leaderboards">LEADERBOARDS</string>
+    <string name="main_button_settings">SETTINGS</string>
+
+    <string name="searching_text_searching">Searching for a conversant …</string>
+
+    <string name="play_text_timer">00:30</string>
+    <string name="play_input_text">Type a message…</string>
+    <string name="play_input_send_cd">Send icon</string>
+
+    <string name="guess_text_human">HUMAN PLAYER</string>
+    <string name="guess_text_ai">AI PLAYER</string>
+    <string name="guess_image_logo_cd">The Turing Game logo</string>
+    <string name="guess_image_guess_cd">Guess text</string>
+
+    <string name="result_text_menu">BACK TO MENU</string>
+    <string name="result_image_logo_cd">The Turing Game logo</string>
+    <string name="result_image_correct_cd">Correct text</string>
+
+</resources>

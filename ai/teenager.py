@@ -23,7 +23,7 @@ class Teenager(Personality):
         shortWords = {
 	        'your' : 'ur',
             'tonight' : '2nite',
-            'for you information' : 'fyi',
+            'for your information' : 'fyi',
             'okay' : 'k',
             'ok':'k',
 	        'to' : '2',

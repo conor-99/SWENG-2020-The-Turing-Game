@@ -13,6 +13,11 @@ class YoungAdult(Personality):
         output = self.shortenWords(input)
         return output
 
-    # You -> u for instance, more likely to be commonly appropriate.Needs to return a string. - Kishore
+    # You -> u for instance, more likely to be commonly appropriate. Needs to return a string. - Kishore
     def shortenWords(self, input):
         return input
+
+    # Add appropriate emjois - Luiz Fellipe
+    def addEmojis(self, input):
+        return input
+    

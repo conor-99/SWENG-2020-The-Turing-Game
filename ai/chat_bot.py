@@ -24,7 +24,7 @@ def main():
     # Certain aspects of this program will only exist on the commandline.
     if terminalMode:
         # Set up our timer
-        timer = BackgroundScheduler()
+        timer = BackgroundScheduler({"apscheduler.timezone": "Europe/Dublin"})
         timer.add_job(endProgram, "interval", minutes=1)
         c_background    = "\033[44m"
         c_blue          = "\033[94m"

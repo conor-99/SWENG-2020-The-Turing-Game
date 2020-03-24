@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:clipToPadding="false"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context=".PlayActivity">
+
+    <TextView
+        android:id="@+id/play_text_timer"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:background="#fcfcfc"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/play_text_timer"
+        android:textColor="#2a2a2a"
+        android:textSize="30sp" />
+
+    <ListView
+        android:id="@+id/play_list_messages"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:divider="#fff"
+        android:dividerHeight="-15sp" />
+
+    <LinearLayout
+        android:id="@+id/play_layout_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fcfcfc"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/play_input_text"
+            android:layout_width="0dp"
+            android:layout_height="64dp"
+            android:layout_weight="2"
+            android:background="@android:color/transparent"
+            android:ems="10"
+            android:hint="@string/play_input_text"
+            android:importantForAutofill="no"
+            android:inputType="text|textCapSentences"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="5dp"
+            android:text=""
+            android:textColorHighlight="@android:color/primary_text_dark"
+            android:textColorLink="@android:color/primary_text_dark"
+            android:textCursorDrawable="@null" />
+
+        <ImageButton
+            android:id="@+id/play_input_send"
+            style="@android:style/Widget.DeviceDefault.Button.Borderless"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="10dp"
+            android:backgroundTint="#f0f0f0"
+            android:contentDescription="@string/play_input_send_cd"
+            android:paddingLeft="15dp"
+            android:paddingTop="11dp"
+            android:paddingRight="11dp"
+            android:paddingBottom="11dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_send_grey_24dp" />
+    </LinearLayout>
+</LinearLayout>

@@ -2,10 +2,15 @@ package backend;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
+import com.google.firebase.auth.UserRecord;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,6 +29,11 @@ public class MainActivity {
 		}	
 	}
 	
+	/**
+	 * Main method for verifying our server
+	 * Should be called during initialization.
+	 * @throws IOException
+	 */
 	private static void authenticateServer() throws IOException {
 		// Fetch the service account key JSON file contents
 		FileInputStream serviceAccount = new FileInputStream("serverKeys.json");
@@ -50,6 +60,21 @@ public class MainActivity {
 		  }
 		});
 	}
+	
+	/**
+	 * Method for verifying if incoming token is a logged in user.
+	 * If yes, it returns the userID of that user
+	 * NOTE: idToken != userID
+	 * @param idToken
+	 * @return userID
+	 * @throws FirebaseAuthException 
+	 */
+	static String checkUserAuthentication(String idToken) throws FirebaseAuthException {
+		FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
+		System.out.println("Successfully verified the user with token: "+idToken);
+		String userID = decodedToken.getUid();
+		return userID;
+	}
 }
 
 //FEEDBACK UPLOAD PART
@@ -71,51 +96,6 @@ public class MainActivity {
 //    newFeedback.child("reply-email").setValue(email);
 //
 //
-//}
-
-
-// AUTHENTICATION PART
-
-//Firebase atributes
-//private FirebaseAuth mAuth;
-//private FirebaseUser mCurrentUser;
-//private FirebaseAuth.AuthStateListener mAuthListener;
-//
-///**
-// * Method to initialise Firebase services, might e needed for use in other activities
-// * created: 30/03/2019 by J.Cistiakovas
-// * last modified:
-// */
-//private void createFirebaseServices() {
-//    //Firebase anonymous Auth
-//    FirebaseApp.initializeApp(this);
-//    mAuth = FirebaseAuth.getInstance();
-//    //listener that listens for change in the Auth state
-//    mAuthListener = new FirebaseAuth.AuthStateListener() {
-//        @Override
-//        public void onAuthStateChanged(@NonNull final FirebaseAuth firebaseAuth) {
-//            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-//            //check if user is already signed in
-//            if (currentUser == null) {
-//                mAuth.signInAnonymously().addOnCompleteListener(home_screen.this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if (task.isSuccessful()) {
-//                            mCurrentUser = firebaseAuth.getCurrentUser();
-//                        } else {
-//                            //TODO: fail the program or do something here
-//                        }
-//                    }
-//                });
-//            } else {
-//                //user is signed in - happy days
-//                mCurrentUser = currentUser;
-//                Log.d(TAG, "User already signed in. User id : " + mCurrentUser.getUid());
-//
-//            }
-//        }
-//    };
-//    mAuth.addAuthStateListener(mAuthListener);
 //}
 
 // ACTUAL DATA UPLOAD PART
