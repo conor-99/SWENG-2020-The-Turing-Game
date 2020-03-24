@@ -33,9 +33,12 @@ class Teenager(Personality):
             }       
         
         input = self.string2Array(self.input)    
+        input = self.string2Array(input)    
         for x in range(0,len(input)):
             for y in shortWords:
                 if(str(input[x]) == y):
                     input[x] = shortWords[y]
         self.input = self.array2String(input)               
-        return
+        return        input = self.array2String(input)               
+        
+        return input
