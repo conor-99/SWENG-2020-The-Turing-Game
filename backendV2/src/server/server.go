@@ -10,8 +10,10 @@ import (
 	"fmt"
 )
 
+var app *firebase.App
+
 func main() {
-	app := authenticateServer()
+	app = authenticateServer()
 		
 	// database client
 	dbClient, err := app.Database(context.Background())
