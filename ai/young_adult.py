@@ -19,5 +19,48 @@ class YoungAdult(Personality):
 
     # Add appropriate emjois - Luiz Fellipe
     def addEmojis(self, input):
+        
+        if input.find('sad')!= -1:
+            index = input.find('sad')
+            length = len('sad')
+            output_line = input[:index+length] + ' \U0001F625' + input[index+length:]
+            print(output_line)
+            return output_line
+        elif input.find('happy')!= -1:
+            index = input.find('happy')
+            length = len('happy')
+            output_line = input[:index+length] + ' \U0001F603' + input[index+length:]
+            print(output_line)
+            return output_line
+        elif input.find('funny')!= -1:
+            index = input.find('funny')
+            length = len('funny')
+            output_line = input[:index+length] + ' \U0001F602' + input[index+length:]
+            print(output_line)
+            return output_line
+        elif input.find('love')!= -1:
+            index = input.find('love')
+            length = len('love')
+            output_line = input[:index+length] + ' \U0001F60D' + input[index+length:]
+            print(output_line)
+            return output_line
+        elif input.find('star')!= -1:
+            index = input.find('star')
+            length = len('star')
+            output_line = input[:index+length] + ' \U0001F929' + input[index+length:]
+            print(output_line)
+            return output_line
+        elif input.find('good night')!= -1:
+            index = input.find('good night')
+            length = len('good night')
+            output_line = input[:index+length] + ' \U0001F634' + input[index+length:]
+            print(output_line)
+            return output_line
+        elif input.find('angry')!= -1:
+            index = input.find('angry')
+            length = len('angry')
+            output_line = input[:index+length] + ' \U0001F621' + input[index+length:]
+            print(output_line)
+            return output_line
+        
         return input
-    
