@@ -74,6 +74,35 @@ func checkUserAuthentication(idToken string) (*auth.Token, error) {
 	return token, nil
 }
 
+func leaderboardHandler() {
+	///listener
+	log.Fatal(http.ListenAndServer("/api/leaderboards", http.HandlerFunc(requestHandler)))
+
+
+  // Create a database client from App.
+  client, err := app.Database(ctx)
+  if err != nil {
+          log.Fatalln("Error initializing database client:", err)
+  }
+
+  // Get a database reference to posts(? need update)
+  ref := client.NewRef("?")
+
+  // Read the data at the posts reference (this is a blocking operation)
+  var post Post
+  if err := ref.Get(ctx, &post); err != nil {
+          log.Fatalln("Error reading value:", err)
+  }
+
+  //arrange the users in database by score
+  ref := client.NewUser("leaderboards")
+
+  result, err := ref.OrderByValue().GetOrdered(ctx)
+  if err != nil {
+        log.Fatalln("Error querying database:", err)
+  }
+}
+
 // TODO remove this later
 //FEEDBACK UPLOAD PART
 
