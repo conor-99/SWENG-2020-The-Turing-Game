@@ -12,15 +12,22 @@ import (
 
 var app *firebase.App
 
+//specify user interface
+type User struct {
+    rank int 'json:"rank"'
+    username string 'json:"username"'
+    score float64 'json:"score"'
+}
+
 func main() {
 	app = authenticateServer()
-		
+
 	// database client
 	dbClient, err := app.Database(context.Background())
 	if err != nil {
         log.Fatalln("Error initializing database client:", err)
-	}	
-	
+	}
+
 	//TODO just test dataset output, remove later
 	// context.Background just creates empty context that we can pass if we dont need this tool
 	ref := dbClient.NewRef("")
@@ -62,7 +69,7 @@ func checkUserAuthentication(idToken string) (*auth.Token, error) {
         log.Printf("Error verifying ID token: %v\n", err)
         return nil, err
 	}
-	
+
 	log.Printf("Verified ID token: %v\n", token)
 	return token, nil
 }
