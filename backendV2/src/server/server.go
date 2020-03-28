@@ -210,23 +210,23 @@ func sendMessageHandler(w http.ResponseWriter, r *http.Request) {
     log.Fatalln("Decode failure! &v", err)
   }
 
-	 //get and verify userid
-	 userToken, err := checkUserAuthentication(msg.auth)
-	 if err != nil {
-     log.Fatalln("Authentication failure!", err)
+ //get and verify userid
+	userToken, err := checkUserAuthentication(msg.auth)
+	if err != nil {
+    log.Fatalln("Authentication failure!", err)
    }
 
-   //initializing database
-   client, err = app.Database(ctx)
-	 if err != nil{
-		 log.Fatalln("Initialization Error!")
+//initializing database
+ client, err = app.Database(ctx)
+ if err != nil{
+		log.Fatalln("Initialization Error!")
 	 }
 
-  //sending message to database
-   chatRef := client.NewRef("chatRooms/chatRoom")
-	 roomRef,err := chatRef.OrderByKey().EqualTo(cid).GetOrdered(ctx)
-	 if err != nil {
-     log.Fatalln("Query failure! &v", err)
+//sending message to database
+ chatRef := client.NewRef("chatRooms/chatRoom")
+ roomRef,err := chatRef.OrderByKey().EqualTo(cid).GetOrdered(ctx)
+ if err != nil {
+    log.Fatalln("Query failure! &v", err)
    }
 
    err := roomRef.Set(ctx, map[string]*sendMessage {
