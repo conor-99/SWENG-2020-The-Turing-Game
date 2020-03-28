@@ -26,8 +26,13 @@ type endConversationRequest struct{
 }
 
 type newUser struct {
-    username string "json:  username" 
+    username string "json:  username"
     score float64 "json: score"
+}
+
+type sendMessage struct {
+  auth  string "json:auth"
+  text  string "json:text"
 }
 
 func main() {
@@ -47,6 +52,11 @@ func main() {
         log.Fatalln("Error reading from database:", err)
 	}
 	fmt.Println(data)
+
+	go func() {
+	log.Fatal(http.ListenAndServe("localhost:422/api/conversation/send/:cid"), http.HandlerFunc(sendMessageHandler)))
+}
+
 }
 
 // This method should be called on initialization
@@ -126,12 +136,12 @@ auth:=endReq.auth
 userToken, err := checkUserAuthentication(auth)
 if err!=nil {
 	log.Fatalf("error verifying ID token: %v\n", err)
-} 
+}
 
 
 //get a reference to the chat rooms section of the database
 //cid:= r.URL.Path[1:]
-cid:= r.URL.Path[len("/api/conversation/end/"):]	
+cid:= r.URL.Path[len("/api/conversation/end/"):]
 client, err := app.Database(ctx)
 
 ref := client.NewRef("availableGames/chatRoomId")
@@ -180,9 +190,58 @@ err = ref.Set(ctx,userScore)
 if err != nil{
 	log.Fatalln("Error setting value", err)
 }
-	
+
 }
 
+//Handler which decodes json objects and then sends message 'text' from 'auth'
+//to conversation 'convid'
+func sendMessageHandler(w http.ResponseWriter, r *http.Request) {
+
+	ctx := context.Background()
+
+//get conversation id
+	cid := r.URL.Path[len("api/conversation/send/"):]
+  var msg sendMessage
+
+	//decode json
+  decoder = := json.NewDecoder(r.body)
+  err := decoder.Decode(&msg)
+  if err != nil {
+    log.Fatalln("Decode failure! &v", err)
+  }
+
+	 //get and verify userid
+	 userToken, err := checkUserAuthentication(msg.auth)
+	 if err != nil {
+     log.Fatalln("Authentication failure!", err)
+   }
+
+   //initializing database
+   client, err = app.Database(ctx)
+	 if err != nil{
+		 log.Fatalln("Initialization Error!")
+	 }
+
+  //sending message to database
+   chatRef := client.NewRef("chatRooms/chatRoom")
+	 roomRef,err := chatRef.OrderByKey().EqualTo(cid).GetOrdered(ctx)
+	 if err != nil {
+     log.Fatalln("Query failure! &v", err)
+   }
+
+   err := roomRef.Set(ctx, map[string]*sendMessage {
+     "messages": [
+            {    "id" : userToken.UID,
+                 "message" : msg.text,
+                 "timestamp": "2069-04-20  09:11:01"
+            },
+     ]
+   })
+   if err != nil {
+     log.Fatalln("Error setting value")
+   }
+
+}
 
 
 
