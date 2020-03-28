@@ -179,68 +179,68 @@ func getNewConversationID() cid string {
 
 func endConversationHandler(w http.ResponseWriter, r *http.Request){
 
-ctx := context.Background()
-//Authenticate User
-var endReq endConversationRequest
-err := json.NewDecoder(r.Body).Decode(&endReq)
-auth:=endReq.auth
-userToken, err := checkUserAuthentication(auth)
-if err!=nil {
-	log.Fatalf("error verifying ID token: %v\n", err)
-}
-
-
-//get a reference to the chat rooms section of the database
-//cid:= r.URL.Path[1:]
-cid:= r.URL.Path[len("/api/conversation/end/"):]
-client, err := app.Database(ctx)
-
-ref := client.NewRef("availableGames/chatRoomId")
-//results,err := ref.OrderByKey().EqualTo(cid).GetOrdered(ctx)
-if err != nil{
-	log.Fatalln("Error querying database:", err)
-}
-
-//make this chatroom complete
-//roomStatus := results.Get()
-address := "availableGames/" + cid
-ref = client.NewRef(address)
-err = ref.Set(ctx,"complete")
-if err != nil{
-	log.Fatalln("Error setting value as complete:", err)
-}
-
-// Submit guess
-
-userRef := client.NewRef("leaderboards/user")
-_,err = userRef.OrderByKey().EqualTo(userToken.UID).GetOrdered(ctx)
-if err!= nil{
-
-	if _, err := userRef.Push(ctx, &newUser{
-	username: userToken.UID,
-	score: 1,
-	});
-	err != nil {
-	log.Fatalln("Error pushing child node:", err)
-
+	ctx := context.Background()
+	//Authenticate User
+	var endReq endConversationRequest
+	err := json.NewDecoder(r.Body).Decode(&endReq)
+	auth:=endReq.auth
+	userToken, err := checkUserAuthentication(auth)
+	if err!=nil {
+		log.Fatalf("error verifying ID token: %v\n", err)
 	}
-	return
-}
-//Getting the score of the user
-var nUser newUser
-userAdd := "leaderboards/" + userToken.UID
-userRef = client.NewRef(userAdd)
- if err = userRef.Get(ctx,&nUser); err!= nil{
- 	log.Fatalln("Error getting value:", err)}
 
-//Setting the score of the user
-userAdd = "leaderboards/" + userToken.UID + "/score"
-ref = client.NewRef(userAdd)
-userScore := nUser.score + 1;
-err = ref.Set(ctx,userScore)
-if err != nil{
-	log.Fatalln("Error setting value", err)
-}
+
+	//get a reference to the chat rooms section of the database
+	//cid:= r.URL.Path[1:]
+	cid:= r.URL.Path[len("/api/conversation/end/"):]
+	client, err := app.Database(ctx)
+
+	ref := client.NewRef("availableGames/chatRoomId")
+	//results,err := ref.OrderByKey().EqualTo(cid).GetOrdered(ctx)
+	if err != nil{
+		log.Fatalln("Error querying database:", err)
+	}
+
+	//make this chatroom complete
+	//roomStatus := results.Get()
+	address := "availableGames/" + cid
+	ref = client.NewRef(address)
+	err = ref.Set(ctx,"complete")
+	if err != nil{
+		log.Fatalln("Error setting value as complete:", err)
+	}
+
+	// Submit guess
+
+	userRef := client.NewRef("leaderboards/user")
+	_,err = userRef.OrderByKey().EqualTo(userToken.UID).GetOrdered(ctx)
+	if err!= nil{
+
+		if _, err := userRef.Push(ctx, &newUser{
+		username: userToken.UID,
+		score: 1,
+		});
+		err != nil {
+		log.Fatalln("Error pushing child node:", err)
+
+		}
+		return
+	}
+	//Getting the score of the user
+	var nUser newUser
+	userAdd := "leaderboards/" + userToken.UID
+	userRef = client.NewRef(userAdd)
+	if err = userRef.Get(ctx,&nUser); err!= nil{
+		log.Fatalln("Error getting value:", err)}
+
+	//Setting the score of the user
+	userAdd = "leaderboards/" + userToken.UID + "/score"
+	ref = client.NewRef(userAdd)
+	userScore := nUser.score + 1;
+	err = ref.Set(ctx,userScore)
+	if err != nil{
+		log.Fatalln("Error setting value", err)
+	}
 
 }
 
@@ -255,7 +255,7 @@ func sendMessageHandler(w http.ResponseWriter, r *http.Request) {
   var msg sendMessage
 
 	//decode json
-  decoder = := json.NewDecoder(r.body)
+  decoder := json.NewDecoder(r.body)
   err := decoder.Decode(&msg)
   if err != nil {
     log.Fatalln("Decode failure! &v", err)
@@ -292,6 +292,30 @@ func sendMessageHandler(w http.ResponseWriter, r *http.Request) {
      log.Fatalln("Error setting value")
    }
 
+}
+
+func flagConversationHandler(w http.ResponseWriter, r *http.Request) {
+	//Creating database client from app
+	ctx := context.Background()
+	client, err := app.Database(ctx)
+	if err != nil {
+		log.Fatalf("error getting Auth client: %v\n", err)
+	}
+
+	//Getting the conversation id from the URL
+	cid := r.URL.Path[len("/api/conversation/flag/"):]
+
+	//Creating a reference to flaggedConversations in database
+	path := "/flaggedConversations" + cid
+	ref := client.NewRef(path)
+
+
+	//Set /flaggedConversations/:cid in DB to "flagged"
+	err = ref.Set(ctx,"flagged")
+	if err != nil {
+		log.Fatalln("Error setting flagged:", err)
+	}
+	
 }
 
 
