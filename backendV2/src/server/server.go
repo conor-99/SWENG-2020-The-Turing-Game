@@ -9,6 +9,7 @@ import (
 	"google.golang.org/api/option"
 	"fmt"
 	"encoding/json"
+	"github.com/elgs/gostrgen"
 )
 
 var app *firebase.App
@@ -18,6 +19,14 @@ type User struct {
     rank int 'json:"rank"'
     username string 'json:"username"'
     score float64 'json:"score"'
+}
+
+type startConversationRequest struct {
+	auth string "json: auth"
+}
+
+type conversationID struct {
+	cid string "json: cid"
 }
 
 type endConversationRequest struct{
@@ -125,6 +134,48 @@ func leaderboardHandler() {
 }
 
 
+func startConversationHandler(w http.ResponseWriter, r http.Request) {
+
+	log.Fatal(http.ListenAndServer("/api/conversation/start", http.HandlerFunc(requestHandler)))
+
+	ctx := context.Background()
+
+	//decode JSON and authenticate user
+	var startReq startConversationRequest
+	err := json.NewDecoder(r.Body).Decode(&startReq)
+	auth := startReq.auth
+	userToken, err := checkUserAuthentication(app, auth)
+	if err != nil {
+		log.Fatalf("error verifying ID token: %v\n", err)
+	}
+
+	var newConvID conversationID
+	newConvID.cid = getNewConversationID()
+	id, err := json.Marshal(newConvID)
+	if err != nil {
+		log.Fatalf("error converting to json: %v\n", err)
+	}
+	w.Write(id)
+
+}
+
+func getNewConversationID() cid string {
+	//generates a random string that could contain any lowercase and uppercase letters and digits 0 to 9
+
+	charsToGenerate := 10 //Length of the conversatoinID string
+	charSet := gostrgen.Lower | gostrgen.Digit
+	includes := "" // optionally include some additional letters
+	excludes := "" //exclude big 'O' and small 'l' to avoid confusion with zero and one.
+
+	str, err := gostrgen.RandGen(charsToGenerate, charSet, includes, excludes)
+	if err != nil {
+		log.Println(err)
+	}
+	return str
+	//log.Println(str) // zxh9pvoxbaup32b7s0d
+}
+
+
 
 func endConversationHandler(w http.ResponseWriter, r *http.Request){
 
@@ -210,23 +261,23 @@ func sendMessageHandler(w http.ResponseWriter, r *http.Request) {
     log.Fatalln("Decode failure! &v", err)
   }
 
- //get and verify userid
-	userToken, err := checkUserAuthentication(msg.auth)
-	if err != nil {
-    log.Fatalln("Authentication failure!", err)
+	 //get and verify userid
+	 userToken, err := checkUserAuthentication(msg.auth)
+	 if err != nil {
+     log.Fatalln("Authentication failure!", err)
    }
 
-//initializing database
- client, err = app.Database(ctx)
- if err != nil{
-		log.Fatalln("Initialization Error!")
+   //initializing database
+   client, err = app.Database(ctx)
+	 if err != nil{
+		 log.Fatalln("Initialization Error!")
 	 }
 
-//sending message to database
- chatRef := client.NewRef("chatRooms/chatRoom")
- roomRef,err := chatRef.OrderByKey().EqualTo(cid).GetOrdered(ctx)
- if err != nil {
-    log.Fatalln("Query failure! &v", err)
+  //sending message to database
+   chatRef := client.NewRef("chatRooms/chatRoom")
+	 roomRef,err := chatRef.OrderByKey().EqualTo(cid).GetOrdered(ctx)
+	 if err != nil {
+     log.Fatalln("Query failure! &v", err)
    }
 
    err := roomRef.Set(ctx, map[string]*sendMessage {
