@@ -101,7 +101,8 @@ func checkUserAuthentication(idToken string) (*auth.Token, error) {
 	ctx := context.Background()
 	client, err := app.Auth(ctx)
 	if err != nil {
-        log.Fatalf("error getting Auth client: %v\n", err)
+        log.Printf("error getting Auth client: %v\n", err)
+        return nil, err
 	}
 
 	token, err := client.VerifyIDToken(ctx, idToken)
@@ -128,11 +129,13 @@ func leaderboardHandler(w http.ResponseWriter, req *http.Request) {
 
   var lboard LeaderboardResponse
   if err := ref.Get(ctx, &lboard); err != nil {
-          log.Printf("Error reading value: %v", err)
+	  log.Printf("Error reading value: %v", err)
+	  return
   }
   jsonLb, err := json.Marshal(lboard)
   if err != nil {
   	log.Printf("Error Marshalling leaderbaords json: %v", err)
+  	return
   }
   w.Write(jsonLb)
 }
@@ -145,14 +148,16 @@ func startConversationHandler(w http.ResponseWriter, r *http.Request) {
 	auth := startReq.auth
 	_, err = checkUserAuthentication(auth) // dont need the token here
 	if err != nil {
-		log.Fatalf("error verifying ID token: %v\n", err)
+		log.Printf("error verifying ID token: %v\n", err)
+		return
 	}
 
 	var newConvID conversationID
 	newConvID.cid = getNewConversationID()
 	id, err := json.Marshal(newConvID)
 	if err != nil {
-		log.Fatalf("error converting to json: %v\n", err)
+		log.Printf("error converting to json: %v\n", err)
+		return
 	}
 	w.Write(id)
 
@@ -169,6 +174,7 @@ func getNewConversationID() string {
 	str, err := gostrgen.RandGen(charsToGenerate, charSet, includes, excludes)
 	if err != nil {
 		log.Println(err)
+		return
 	}
 	return str
 	//log.Println(str) // zxh9pvoxbaup32b7s0d
@@ -184,7 +190,8 @@ func endConversationHandler(w http.ResponseWriter, r *http.Request){
 	auth:=endReq.auth
 	userToken, err := checkUserAuthentication(auth)
 	if err!=nil {
-		log.Fatalf("error verifying ID token: %v\n", err)
+		log.Printf("error verifying ID token: %v\n", err)
+		return
 	}
 
 
@@ -192,7 +199,8 @@ func endConversationHandler(w http.ResponseWriter, r *http.Request){
 	cid:= r.URL.Path[len("/api/conversation/end/"):]
 	client, err := app.Database(ctx)
 	if err != nil{
-		log.Fatalln("Error querying database:", err)
+		log.Printf("Error querying database:", err)
+		return	
 	}
 //
 //	//make this chatroom complete
@@ -200,7 +208,8 @@ func endConversationHandler(w http.ResponseWriter, r *http.Request){
 	ref := client.NewRef(address)
 	err = ref.Set(ctx,"complete")
 	if err != nil{
-		log.Fatalln("Error setting value as complete:", err)
+		log.Printf("Error setting value as complete:", err)
+		return
 	}
 
 	// Submit guess
@@ -213,6 +222,7 @@ func endConversationHandler(w http.ResponseWriter, r *http.Request){
 		});
 		err != nil {
 			log.Printf("Error pushing child node: %v", err)
+			return
 		}
 		return
 	}
@@ -229,7 +239,8 @@ func endConversationHandler(w http.ResponseWriter, r *http.Request){
 	userScore := nUser.score + 1;
 	err = ref.Set(ctx,userScore)
 	if err != nil{
-		log.Fatalln("Error setting value", err)
+		log.Printf("Error setting value", err)
+		return
 	}
 	w.WriteHeader(http.StatusOK)
 }
@@ -248,18 +259,21 @@ func sendMessageHandler(w http.ResponseWriter, r *http.Request) {
 	err := decoder.Decode(&msg)
 	if err != nil {
 	    log.Printf("Decode failure! %v", err)
+	    return
 	}
 
 	//get and verify userid
 	userToken, err := checkUserAuthentication(msg.auth)
 	if err != nil {
 	    log.Printf("Authentication failure!", err)
+	    return
     }
 
     //initializing database
     client, err := app.Database(ctx)
 	if err != nil{
-		log.Fatalln("Initialization Error!")
+		log.Printf("Initialization Error!")
+		return
 	}
 
 	address := "chatRooms/"+cid
@@ -273,7 +287,8 @@ func sendMessageHandler(w http.ResponseWriter, r *http.Request) {
 	   },
    })
    if err != nil {
-     log.Fatalln("Error setting value")
+     log.Printf("Error setting value")
+     return
    }
    w.WriteHeader(http.StatusOK)
 }
@@ -283,7 +298,8 @@ func flagConversationHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := context.Background()
 	client, err := app.Database(ctx)
 	if err != nil {
-		log.Fatalf("error getting Auth client: %v\n", err)
+		log.Printf("error getting Auth client: %v\n", err)
+		return
 	}
 
 	//Getting the conversation id from the URL
@@ -297,7 +313,8 @@ func flagConversationHandler(w http.ResponseWriter, r *http.Request) {
 	//Set /flaggedConversations/:cid in DB to "flagged"
 	err = ref.Set(ctx,"flagged")
 	if err != nil {
-		log.Fatalln("Error setting flagged:", err)
+		log.Printf("Error setting flagged:", err)
+		return
 	}
 	w.WriteHeader(http.StatusOK)
 }
