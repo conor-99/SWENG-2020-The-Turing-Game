@@ -70,17 +70,12 @@ func main() {
         log.Fatalln("Error reading from database:", err)
 	}
 	fmt.Println(data)
-
-	//go func() {
-		log.Fatal(http.ListenAndServe("localhost:422/api/conversation/send/:cid", http.HandlerFunc(sendMessageHandler)))
-		//listener
-		log.Fatal(http.ListenAndServe("/api/leaderboards", http.HandlerFunc(leaderboardHandler)))
-		log.Fatal(http.ListenAndServe("/api/conversation/start", http.HandlerFunc(startConversationHandler)))
-		log.Fatal(http.ListenAndServe("/api/conversation/start", http.HandlerFunc(endConversationHandler)))
-		log.Fatal(http.ListenAndServe("/api/conversation/start", http.HandlerFunc(flagConversationHandler)))
-		
-	//}
-
+	http.Handle("/api/conversation/send", http.HandlerFunc(sendMessageHandler))
+	http.Handle("/api/leaderboards", http.HandlerFunc(leaderboardHandler))
+	http.Handle("/api/conversation/start", http.HandlerFunc(startConversationHandler))
+	http.Handle("/api/conversation/end/", http.HandlerFunc(endConversationHandler))
+	http.Handle("/api/conversation/flag", http.HandlerFunc(flagConversationHandler))
+	log.Fatal(http.ListenAndServe("localhost:420", nil))
 }
 
 // This method should be called on initialization
