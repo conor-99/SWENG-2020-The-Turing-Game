@@ -20,6 +20,10 @@ type User struct {
     Score float64 	`json:"score"`
 }
 
+type requestMessage struct {
+	auth string		`json:"auth"`
+}
+
 type LeaderboardResponse struct {
 	Users []User 	`json:users`
 }
@@ -60,6 +64,7 @@ func main() {
 	http.Handle("/api/conversation/start", http.HandlerFunc(startConversationHandler)) // checked
 	http.Handle("/api/conversation/end/", http.HandlerFunc(endConversationHandler))
 	http.Handle("/api/conversation/flag/", http.HandlerFunc(flagConversationHandler)) // checked
+	http.Handle("/api/conversation/receive/", http.HandlerFunc(receiveMessageHandler))
 	log.Fatal(http.ListenAndServe("localhost:420", nil))
 }
 
@@ -310,3 +315,54 @@ func flagConversationHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+// handler for when a call to a url is reached to get the messages
+func receiveMessageHandler(w http.ResponseWriter, r *http.Request) {
+	ctx := context.Background()
+	cid := r.URL.Path[len("/api/conversation/receive/"):]
+	var receiveMessageRequest requestMessage
+
+	err := json.NewDecoder(r.Body).Decode(&receiveMessageRequest)
+	// places all the data from the body into receiveMessageRequest and puts an error into err
+	if err != nil {
+		log.Printf("JSON decoding failed %v: ", err)
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// now we have the cid and the user auth
+
+	idToken, err := checkUserAuthentication(receiveMessageRequest.auth)	// validate the user  is real
+	if err != nil {
+		log.Printf("Error authenticating user %v: ", err)
+		http.Error(w, err.Error(), http.StatusUnauthorized)
+		return
+	}
+	id := idToken.UID
+
+	// user is authenticated and the we have cid and user auth, now we can look to get all the data
+	client, err := app.Database(ctx)
+	if err != nil {
+		log.Printf("Error initializing database client: ", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	// ref to the chatRooms, query on it to find the chat room we want
+	address := "chatRooms" + cid
+	chatRoomRef := client.NewRef(address)
+	messages, err := chatRoomRef.OrderByChild(address + "/id").EqualTo(id).GetOrdered(ctx)
+	if err != nil {
+		log.Printf("Error getting messages %v: ", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	responseJSON, err := json.Marshal(messages)
+	if err != nil {
+		log.Printf("Marshalling failed: %v", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.Write(responseJSON)
+	return
+}
