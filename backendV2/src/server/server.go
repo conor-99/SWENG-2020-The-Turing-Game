@@ -57,9 +57,9 @@ func main() {
 
 	http.Handle("/api/conversation/send", http.HandlerFunc(sendMessageHandler))
 	http.Handle("/api/leaderboards", http.HandlerFunc(leaderboardHandler))
-	http.Handle("/api/conversation/start", http.HandlerFunc(startConversationHandler))
+	http.Handle("/api/conversation/start", http.HandlerFunc(startConversationHandler)) // checked
 	http.Handle("/api/conversation/end/", http.HandlerFunc(endConversationHandler))
-	http.Handle("/api/conversation/flag", http.HandlerFunc(flagConversationHandler))
+	http.Handle("/api/conversation/flag/", http.HandlerFunc(flagConversationHandler)) // checked
 	log.Fatal(http.ListenAndServe("localhost:420", nil))
 }
 
@@ -136,7 +136,6 @@ func startConversationHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	log.Print(startReq.Auth)
 	auth := startReq.Auth
 	_, err = checkUserAuthentication(auth) // dont need the token here
 	if err != nil {
@@ -290,22 +289,22 @@ func flagConversationHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := context.Background()
 	client, err := app.Database(ctx)
 	if err != nil {
-		log.Printf("error getting Auth client: %v\n", err)
+		log.Printf("error getting database client: %v\n", err)
 		return
 	}
 
 	//Getting the conversation id from the URL
 	cid := r.URL.Path[len("/api/conversation/flag/"):]
 
-	//Creating a reference to flaggedConversations in database
-	path := "flaggedConversations" + cid
-	ref := client.NewRef(path)
+	ref := client.NewRef("flaggedConversations")
 
 
 	//Set /flaggedConversations/:cid in DB to "flagged"
-	err = ref.Set(ctx,"flagged")
+	err = ref.Set(ctx, map[string]string {
+	   cid : "flagged",
+   })
 	if err != nil {
-		log.Printf("Error setting flagged:", err)
+		log.Printf("Error setting flagged: %v", err)
 		return
 	}
 	w.WriteHeader(http.StatusOK)
