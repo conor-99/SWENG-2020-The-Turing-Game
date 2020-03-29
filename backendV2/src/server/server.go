@@ -7,7 +7,6 @@ import (
 	"net/http" 
 	"golang.org/x/net/context"
 	"google.golang.org/api/option"
-	"fmt"
 	"encoding/json"
 	"github.com/elgs/gostrgen"
 )
@@ -16,60 +15,46 @@ var app *firebase.App
 
 //specify user interface
 type User struct {
-    rank     int 	`json:"rank"`
-    username string `json:"username"`
-    score float64 	`json:"score"`
+    Rank     int 	`json:"rank"`
+    Username string `json:"username"`
+    Score float64 	`json:"score"`
 }
 
 type LeaderboardResponse struct {
-	users []User 	`json:users`
+	Users []User 	`json:users`
 }
 
-type startConversationRequest struct {
-	auth string 	"json: auth"
+type StartConversationRequest struct {
+	Auth string 	"json: auth"
 }
 
-type conversationID struct {
-	cid string 		"json: cid"
+type ConversationID struct {
+	CID string 		"json: cid"
 }
 
-type endConversationRequest struct{
-	auth string  	"json: auth"
-	guess int   	"json: guess"
+type EndConversationRequest struct{
+	Auth string  	"json: auth"
+	Guess int   	"json: guess"
 }
 
-type newUser struct {
-    username string "json:  username"
-    score float64 	"json: score"
+type NewUser struct {
+    Username string "json:  username"
+    Score float64 	"json: score"
 }
 
-type sendMessage struct {
-  auth  string 		"json:auth"
-  text  string 		"json:text"
+type SendMessage struct {
+  Auth  string 		"json:auth"
+  Text  string 		"json:text"
 }
 
-type message struct {
-	message		string `json:"message"`
-	timestamp	string `json:"timestamp"`
+type Message struct {
+	Message		string `json:"message"`
+	Timestamp	string `json:"timestamp"`
 }
 
 func main() {
 	app = authenticateServer()
 
-	// database client
-	dbClient, err := app.Database(context.Background())
-	if err != nil {
-        log.Fatalln("Error initializing database client:", err)
-	}
-
-	//TODO just test dataset output, remove later
-	// context.Background just creates empty context that we can pass if we dont need this tool
-	ref := dbClient.NewRef("")
-	var data map[string]interface{}
-	if err := ref.Get(context.Background(), &data); err != nil {
-        log.Fatalln("Error reading from database:", err)
-	}
-	fmt.Println(data)
 	http.Handle("/api/conversation/send", http.HandlerFunc(sendMessageHandler))
 	http.Handle("/api/leaderboards", http.HandlerFunc(leaderboardHandler))
 	http.Handle("/api/conversation/start", http.HandlerFunc(startConversationHandler))
@@ -142,30 +127,38 @@ func leaderboardHandler(w http.ResponseWriter, req *http.Request) {
 
 //Method returns newly generated cid to request origin
 func startConversationHandler(w http.ResponseWriter, r *http.Request) {
+	
 	//decode JSON and authenticate user
-	var startReq startConversationRequest
+	var startReq StartConversationRequest
 	err := json.NewDecoder(r.Body).Decode(&startReq)
-	auth := startReq.auth
+	if err != nil {
+		log.Printf("Error decoding json: %v\n", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	log.Print(startReq.Auth)
+	auth := startReq.Auth
 	_, err = checkUserAuthentication(auth) // dont need the token here
 	if err != nil {
 		log.Printf("error verifying ID token: %v\n", err)
+		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
 
-	var newConvID conversationID
-	newConvID.cid = getNewConversationID()
+	var newConvID ConversationID
+	newConvID.CID = getNewConversationID()
 	id, err := json.Marshal(newConvID)
 	if err != nil {
 		log.Printf("error converting to json: %v\n", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 	w.Write(id)
 
 }
 
+//generates a random string that could contain any lowercase and uppercase letters and digits 0 to 9
 func getNewConversationID() string {
-	//generates a random string that could contain any lowercase and uppercase letters and digits 0 to 9
-
 	charsToGenerate := 10 //Length of the conversatoinID string
 	charSet := gostrgen.Lower | gostrgen.Digit
 	includes := "" // optionally include some additional letters
@@ -174,10 +167,9 @@ func getNewConversationID() string {
 	str, err := gostrgen.RandGen(charsToGenerate, charSet, includes, excludes)
 	if err != nil {
 		log.Println(err)
-		return
+		return ""
 	}
 	return str
-	//log.Println(str) // zxh9pvoxbaup32b7s0d
 }
 
 // Method end the conversaion with a given CID and updates apropriate fields in the database
@@ -185,9 +177,9 @@ func endConversationHandler(w http.ResponseWriter, r *http.Request){
 
 	ctx := context.Background()
 	//Authenticate User
-	var endReq endConversationRequest
+	var endReq EndConversationRequest
 	err := json.NewDecoder(r.Body).Decode(&endReq)
-	auth:=endReq.auth
+	auth:=endReq.Auth
 	userToken, err := checkUserAuthentication(auth)
 	if err!=nil {
 		log.Printf("error verifying ID token: %v\n", err)
@@ -216,9 +208,9 @@ func endConversationHandler(w http.ResponseWriter, r *http.Request){
 	userRef := client.NewRef("Leaderboards/user")
 	_,err = userRef.OrderByKey().EqualTo(userToken.UID).GetOrdered(ctx)
 	if err!= nil{
-		if _, err := userRef.Push(ctx, &newUser{
-			username: userToken.UID,
-			score: 1,
+		if _, err := userRef.Push(ctx, &NewUser{
+			Username: userToken.UID,
+			Score: 1,
 		});
 		err != nil {
 			log.Printf("Error pushing child node: %v", err)
@@ -227,7 +219,7 @@ func endConversationHandler(w http.ResponseWriter, r *http.Request){
 		return
 	}
 	//Getting the score of the user
-	var nUser newUser
+	var nUser NewUser
 	userAdd := "Leaderboards/" + userToken.UID
 	userRef = client.NewRef(userAdd)
 	if err = userRef.Get(ctx,&nUser); err!= nil{
@@ -236,7 +228,7 @@ func endConversationHandler(w http.ResponseWriter, r *http.Request){
 	//Setting the score of the user
 	userAdd = "Leaderboards/" + userToken.UID + "/score"
 	ref = client.NewRef(userAdd)
-	userScore := nUser.score + 1;
+	userScore := nUser.Score + 1;
 	err = ref.Set(ctx,userScore)
 	if err != nil{
 		log.Printf("Error setting value", err)
@@ -252,7 +244,7 @@ func sendMessageHandler(w http.ResponseWriter, r *http.Request) {
 
 	//get conversation id
 	cid := r.URL.Path[len("api/conversation/send/"):]
-	var msg sendMessage
+	var msg SendMessage
 
 	//decode json
 	decoder := json.NewDecoder(r.Body)
@@ -263,7 +255,7 @@ func sendMessageHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//get and verify userid
-	userToken, err := checkUserAuthentication(msg.auth)
+	userToken, err := checkUserAuthentication(msg.Auth)
 	if err != nil {
 	    log.Printf("Authentication failure!", err)
 	    return
@@ -280,10 +272,10 @@ func sendMessageHandler(w http.ResponseWriter, r *http.Request) {
     //sending message to database
     chatRef := client.NewRef(address)
 
-   err = chatRef.Set(ctx, map[string]*message{
-	   userToken.UID : &message{  
-           message : msg.text,
-           timestamp: "2069-04-20  09:11:01",
+   err = chatRef.Set(ctx, map[string]*Message{
+	   userToken.UID : &Message{  
+           Message : msg.Text,
+           Timestamp: "2069-04-20  09:11:01",
 	   },
    })
    if err != nil {
