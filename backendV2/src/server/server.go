@@ -9,23 +9,20 @@ import (
 	"google.golang.org/api/option"
 	"encoding/json"
 	"github.com/elgs/gostrgen"
+	"time"
 )
 
 var app *firebase.App
 
 //specify user interface
 type User struct {
-    Rank     int 	`json:"rank"`
+    Rank     int 	`json:"rank,omitempty"`
     Username string `json:"username"`
-    Score float64 	`json:"score"`
+    Score  float64 	`json:"score"`
 }
 
 type requestMessage struct {
 	auth string		`json:"auth"`
-}
-
-type LeaderboardResponse struct {
-	Users []User 	`json:users`
 }
 
 type StartConversationRequest struct {
@@ -38,7 +35,7 @@ type ConversationID struct {
 
 type EndConversationRequest struct{
 	Auth string  	"json: auth"
-	Guess int   	"json: guess"
+	Guess float64   	"json: guess"
 }
 
 type NewUser struct {
@@ -52,19 +49,24 @@ type SendMessage struct {
 }
 
 type Message struct {
+	UserID 		string `json:"id"`
 	Message		string `json:"message"`
 	Timestamp	string `json:"timestamp"`
 }
 
+type GetMessagesResponse struct {
+	CID 		string `json:"cid"`
+	Messages	[]Message `json:"messages"`
+}
 func main() {
 	app = authenticateServer()
 
-	http.Handle("/api/conversation/send", http.HandlerFunc(sendMessageHandler))
-	http.Handle("/api/leaderboards", http.HandlerFunc(leaderboardHandler))
-	http.Handle("/api/conversation/start", http.HandlerFunc(startConversationHandler)) // checked
-	http.Handle("/api/conversation/end/", http.HandlerFunc(endConversationHandler))
-	http.Handle("/api/conversation/flag/", http.HandlerFunc(flagConversationHandler)) // checked
-	http.Handle("/api/conversation/receive/", http.HandlerFunc(receiveMessageHandler))
+	http.Handle("/api/conversation/send/", http.HandlerFunc(sendMessageHandler)) 
+	http.Handle("/api/leaderboards", http.HandlerFunc(leaderboardHandler)) 
+	http.Handle("/api/conversation/start", http.HandlerFunc(startConversationHandler)) 
+	http.Handle("/api/conversation/end/", http.HandlerFunc(endConversationHandler)) 
+	http.Handle("/api/conversation/flag/", http.HandlerFunc(flagConversationHandler)) 
+	http.Handle("/api/conversation/receive/", http.HandlerFunc(receiveMessageHandler)) 
 	log.Fatal(http.ListenAndServe("localhost:420", nil))
 }
 
@@ -117,14 +119,26 @@ func leaderboardHandler(w http.ResponseWriter, req *http.Request) {
   // Get a database reference to posts
   ref := client.NewRef("Leaderboards")
 
-  var lboard LeaderboardResponse
-  if err := ref.Get(ctx, &lboard); err != nil {
-	  log.Printf("Error reading value: %v", err)
+  results, err := ref.OrderByChild("score").GetOrdered(ctx); 
+  if err != nil {
+	  log.Printf("Error querying database: %v", err)
+	  http.Error(w, err.Error(), http.StatusInternalServerError)
 	  return
   }
+  var lboard []User
+  for _, r := range results { //TODO may use it later for ranking
+  	var d User
+  	if err := r.Unmarshal(&d); err != nil {
+  		log.Printf("Error unmarshalling result: %v", err)
+  	}
+  	d.Username = r.Key()
+  	lboard = append(lboard, d)  	
+  }
+
   jsonLb, err := json.Marshal(lboard)
   if err != nil {
   	log.Printf("Error Marshalling leaderbaords json: %v", err)
+  	http.Error(w, err.Error(), http.StatusInternalServerError)
   	return
   }
   w.Write(jsonLb)
@@ -154,7 +168,7 @@ func startConversationHandler(w http.ResponseWriter, r *http.Request) {
 	id, err := json.Marshal(newConvID)
 	if err != nil {
 		log.Printf("error converting to json: %v\n", err)
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 	w.Write(id)
@@ -192,7 +206,7 @@ func endConversationHandler(w http.ResponseWriter, r *http.Request){
 
 
 	//get a reference to the chat rooms section of the database
-	cid:= r.URL.Path[len("/api/conversation/end/"):]
+	cid:= r.URL.Path[len("/api/conversation/end/:"):]
 	client, err := app.Database(ctx)
 	if err != nil{
 		log.Printf("Error querying database:", err)
@@ -214,7 +228,7 @@ func endConversationHandler(w http.ResponseWriter, r *http.Request){
 	if err!= nil{
 		if _, err := userRef.Push(ctx, &NewUser{
 			Username: userToken.UID,
-			Score: 1,
+			Score: endReq.Guess,
 		});
 		err != nil {
 			log.Printf("Error pushing child node: %v", err)
@@ -227,8 +241,8 @@ func endConversationHandler(w http.ResponseWriter, r *http.Request){
 	userAdd := "Leaderboards/" + userToken.UID
 	userRef = client.NewRef(userAdd)
 	if err = userRef.Get(ctx,&nUser); err!= nil{
-		log.Fatalln("Error getting value:", err)}
-
+		log.Fatalln("Error getting value:", err)
+	}
 	//Setting the score of the user
 	userAdd = "Leaderboards/" + userToken.UID + "/score"
 	ref = client.NewRef(userAdd)
@@ -247,7 +261,7 @@ func sendMessageHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := context.Background()
 
 	//get conversation id
-	cid := r.URL.Path[len("api/conversation/send/"):]
+	cid := r.URL.Path[len("/api/conversation/send/:"):]
 	var msg SendMessage
 
 	//decode json
@@ -258,7 +272,7 @@ func sendMessageHandler(w http.ResponseWriter, r *http.Request) {
 	    return
 	}
 
-	//get and verify userid
+//	//get and verify userid
 	userToken, err := checkUserAuthentication(msg.Auth)
 	if err != nil {
 	    log.Printf("Authentication failure!", err)
@@ -276,12 +290,11 @@ func sendMessageHandler(w http.ResponseWriter, r *http.Request) {
     //sending message to database
     chatRef := client.NewRef(address)
 
-   err = chatRef.Set(ctx, map[string]*Message{
-	   userToken.UID : &Message{  
+   _, err = chatRef.Push(ctx, &Message{
+		   UserID : userToken.UID,  
            Message : msg.Text,
-           Timestamp: "2069-04-20  09:11:01",
-	   },
-   })
+           Timestamp: time.Now().Format("Mon, 02 Jan 2006 15:04:05 MST"),
+	})
    if err != nil {
      log.Printf("Error setting value")
      return
@@ -299,7 +312,7 @@ func flagConversationHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//Getting the conversation id from the URL
-	cid := r.URL.Path[len("/api/conversation/flag/"):]
+	cid := r.URL.Path[len("/api/conversation/flag/:"):]
 
 	ref := client.NewRef("flaggedConversations")
 
@@ -318,7 +331,7 @@ func flagConversationHandler(w http.ResponseWriter, r *http.Request) {
 // handler for when a call to a url is reached to get the messages
 func receiveMessageHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := context.Background()
-	cid := r.URL.Path[len("/api/conversation/receive/"):]
+	cid := r.URL.Path[len("/api/conversation/receive/:"):]
 	var receiveMessageRequest requestMessage
 
 	err := json.NewDecoder(r.Body).Decode(&receiveMessageRequest)
@@ -329,8 +342,7 @@ func receiveMessageHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// now we have the cid and the user auth
-
+//	// now we have the cid and the user auth 
 	idToken, err := checkUserAuthentication(receiveMessageRequest.auth)	// validate the user  is real
 	if err != nil {
 		log.Printf("Error authenticating user %v: ", err)
@@ -348,16 +360,29 @@ func receiveMessageHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// ref to the chatRooms, query on it to find the chat room we want
-	address := "chatRooms" + cid
+	address := "chatRooms/" + cid
 	chatRoomRef := client.NewRef(address)
-	messages, err := chatRoomRef.OrderByChild(address + "/id").EqualTo(id).GetOrdered(ctx)
+	results, err := chatRoomRef.OrderByChild("username").GetOrdered(ctx)
 	if err != nil {
 		log.Printf("Error getting messages %v: ", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
-	responseJSON, err := json.Marshal(messages)
+	var messages []Message
+	for _, result := range results { 
+	  	var d Message
+	  	if err := result.Unmarshal(&d); err != nil {
+		  	log.Printf("Error unmarshalling result: %v", err)
+	  	}
+	  	if d.UserID != id {
+			messages = append(messages, d)
+	  	}  	
+    }
+	response := GetMessagesResponse {
+		CID: cid,
+		Messages: messages,
+	}
+	responseJSON, err := json.Marshal(response)
 	if err != nil {
 		log.Printf("Marshalling failed: %v", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
