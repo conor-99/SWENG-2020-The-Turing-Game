@@ -71,10 +71,3 @@ class Adult(Personality):
         input = input.replace("ill" , "i'll")
         input = input.replace("im", "i'm")
         return input
-
-    # Function to be replaced by Michael for Diego to fill in.
-    def tmpFunction(self, input):
-        return input
-
-
-	
