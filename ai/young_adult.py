@@ -17,21 +17,17 @@ class YoungAdult(Personality):
     # You -> u for instance, more likely to be commonly appropriate. Needs to return a string. - Kishore
     def shortenWords(self, input):
         shortWords = {
-	        'your' : 'ur',
             'for your information' : 'fyi',
             'okay' : 'kk',
             'ok':'kk',
-	        'to' : '2',
-	        'tomorrow' : '2moro',
             'easy' : 'ez',
             'see you' : 'cya',
             'because' : 'cuz',
-            'you' : 'u',
             'very' : 'v',
             'to be honest' : 'tbh',
-            'Oh my God' : 'OMG',
-            'Boyfriend' : 'bf',
-            'Girlfriend' : 'gf',
+            'oh my god' : 'OMG',
+            'boyfriend' : 'bf',
+            'girlfriend' : 'gf',
             'awesome' : 'cool',
             'in trouble' : 'screwed',
             }        
@@ -47,7 +43,7 @@ class YoungAdult(Personality):
     
     # Add appropriate emjois - Luiz Fellipe
     def addEmojis(self, input):
-        
+
         if input.find('sad')!= -1:
             index = input.find('sad')
             length = len('sad')

@@ -1,3 +1,5 @@
+// Class worked on by the AI Group: Claire McNamara
+
 package com.sweng.theturinggame;
 
 public class BotPersonality {

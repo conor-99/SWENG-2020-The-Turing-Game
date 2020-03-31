@@ -1,3 +1,5 @@
+// Class worked on by the AI Group: Claire McNamara
+
 package com.sweng.theturinggame;
 
 import java.util.HashMap;
@@ -33,7 +35,31 @@ public class YoungAdult extends BotPersonality {
         emojis.put("love", "<3".toCharArray());
     }
 
-    public String shortenWords(String input){
+    private String shortenWords(String input){
+        HashMap<String, String>  shortenedWords = new HashMap<>();
+        shortenedWords.put("for your information", "fyi");
+        shortenedWords.put("okay", "kk");
+        shortenedWords.put("ok", "kk");
+        shortenedWords.put("easy", "ez");
+        shortenedWords.put("see you", "cya");
+        shortenedWords.put("very", "v");
+        shortenedWords.put("because", "cuz");
+        shortenedWords.put("to be honest", "tbh");
+        shortenedWords.put("oh my god", "OMG");
+        shortenedWords.put("boyfriend", "bf");
+        shortenedWords.put("girlfriend", "gf");
+        shortenedWords.put("awesome", "cool");
+        shortenedWords.put("in trouble", "screwed");
+
+        String[] inputAr = input.split(" ");
+        int wordIndex = 0;
+        for (String word:inputAr) {
+            if (shortenedWords.containsKey(word)){
+                inputAr[wordIndex] = shortenedWords.get(word);
+            }
+            wordIndex++;
+        }
+        input = String.join(" ", inputAr);
         return input;
     }
 
