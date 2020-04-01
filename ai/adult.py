@@ -16,7 +16,7 @@ class Adult(Personality):
     # The returned string from the AI model does not have any punctuation. 
     # This function needs to add punction to that string and return it. - Diego
     def addPunctuation(self, input):
-        #Sentence Openers 
+        #Sentence Openers nn
         input = input.replace("hello", "hello,")
         input = input.replace("hi", "hi!")
         input = input.replace("heya", "heya!")
