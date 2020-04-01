@@ -7,14 +7,14 @@ from data_post_processor import DataPostProcessor
 from ai_brain import AI
 from apscheduler.schedulers.background import BackgroundScheduler
 
-import random
+import random, json
 
 end = False
 
 # Takes input from commandline, processes it, displays processed output via commandline.
 def main():
     # This will be an environment variable later
-    terminalMode = True
+    terminalMode = False
     # Simple bit of beautifying for our command-line output.
     c_background   = ""
     c_blue         = ""
@@ -78,6 +78,33 @@ def main():
             else:
                 print(c_blue + output + c_close)
             print(c_background + "Enter another input:" + c_close)
+        else:
+            # handle input through a json file
+            with open("connect.json") as json_file:
+                data = json.load(json_file)
+                for i in data["user"]:
+                    uuid = i["uuid"]
+                    userInput = i["question"]
+                    jPersonality = i["personality"]
+                    answered = i["answered"]
+            # if a personality has been established dont change it
+            if jPersonality == "":
+                jPersonality = perNum
+            # make sure we aren't working on an answered question
+            if answered is False:
+                dump = {}
+                # arrange response json with the output contained
+                dump["user"] = []
+                dump["user"].append({
+                    "uuid" : uuid,
+                    "question" : userInput,
+                    "personality" : jPersonality,
+                    "output" : arrangeResp(userInput, personality),
+                    "answered" : "True"
+                })
+                with open("connect.json", "w") as outfile:
+                    json.dump(dump, outfile)
+            end = True
     if terminalMode:
         print(c_green + "Program exited." + c_close)
 
@@ -86,14 +113,15 @@ def arrangeResp(userInput, personality):
     ai = AI(personality.name)
     # Where output is the processed output.
     preProcessor = DataPreProcessor(userInput)
-    # Was the query too short for the AI, if so, exit.
-    if preProcessor.processInput() == False:
+    # Ensure input string is long enough if the terminal is being used
+    if preProcessor.processInput() is not True:
         return False
-    # This is passed to the model.
     processedInput = preProcessor.input
-    # Receive response from the model.
+    # This is passed to the model.
     response = ai.respond(processedInput, 1)
+    # Receive response from the model.
     response = preProcessor.array2String(response)
+    # Post-processing of data
     postProcessor = DataPostProcessor(response, personality)
     postProcessor.postProcess()
     return response

@@ -1,6 +1,7 @@
 # Class worked on by: Claire
 import random
 from personality import Personality
+from data_pre_processor import DataPreProcessor
 
 class YoungAdult(Personality):
 
@@ -15,11 +16,34 @@ class YoungAdult(Personality):
 
     # You -> u for instance, more likely to be commonly appropriate. Needs to return a string. - Kishore
     def shortenWords(self, input):
+        shortWords = {
+            'for your information' : 'fyi',
+            'okay' : 'kk',
+            'ok':'kk',
+            'easy' : 'ez',
+            'see you' : 'cya',
+            'because' : 'cuz',
+            'very' : 'v',
+            'to be honest' : 'tbh',
+            'oh my god' : 'OMG',
+            'boyfriend' : 'bf',
+            'girlfriend' : 'gf',
+            'awesome' : 'cool',
+            'in trouble' : 'screwed',
+            }        
+        preProcessor = DataPreProcessor(input) 
+        input = preProcessor.string2Array(input)    
+        for x in range(0,len(input)):
+            for y in shortWords:
+                if(str(input[x]) == y):
+                    input[x] = shortWords[y]
+        input = preProcessor.array2String(input)               
+    
         return input
-
+    
     # Add appropriate emjois - Luiz Fellipe
     def addEmojis(self, input):
-        
+
         if input.find('sad')!= -1:
             index = input.find('sad')
             length = len('sad')
