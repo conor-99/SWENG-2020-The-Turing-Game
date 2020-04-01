@@ -28,7 +28,7 @@ public class Teenager extends BotPersonality {
         shortenedWords.put("tonight", "2nite");
         shortenedWords.put("for your information", "fyi");
         shortenedWords.put("okay", "k");
-        shortenedWords.put("k", "ur");
+        shortenedWords.put("ok", "k");
         shortenedWords.put("to", "2");
         shortenedWords.put("tomorrow", "2moro");
         shortenedWords.put("easy", "ez");
