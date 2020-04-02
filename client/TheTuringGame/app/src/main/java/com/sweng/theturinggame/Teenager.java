@@ -22,6 +22,7 @@ public class Teenager extends BotPersonality {
         return input;
     }
 
+    // Adds in slang into the AI's message.
     private String shortenWords(String input){
         HashMap<String, String>  shortenedWords = new HashMap<>();
         shortenedWords.put("your", "ur");

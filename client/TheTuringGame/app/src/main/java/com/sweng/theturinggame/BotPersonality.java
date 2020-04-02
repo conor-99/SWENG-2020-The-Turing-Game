@@ -2,6 +2,7 @@
 
 package com.sweng.theturinggame;
 
+// Super class for Teenager, Young Adult and Adult.
 public class BotPersonality {
 
     public String name;

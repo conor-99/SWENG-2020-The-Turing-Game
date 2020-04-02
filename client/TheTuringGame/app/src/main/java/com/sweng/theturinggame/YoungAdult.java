@@ -35,6 +35,7 @@ public class YoungAdult extends BotPersonality {
         emojis.put("love", "<3".toCharArray());
     }
 
+    // Adds in slang into the AI's message.
     private String shortenWords(String input){
         HashMap<String, String>  shortenedWords = new HashMap<>();
         shortenedWords.put("for your information", "fyi");
@@ -63,6 +64,8 @@ public class YoungAdult extends BotPersonality {
         return input;
     }
 
+    // Adds emojis where appropriate in a sentence i.e. after the first punctuation character, or at
+    // the end of a sentence.
     public String addEmpojis(String input){
         Iterator iter = emojis.entrySet().iterator();
         boolean found = false;
