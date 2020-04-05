@@ -126,7 +126,7 @@ func leaderboardHandler(w http.ResponseWriter, req *http.Request) {
 	  return
   }
   var lboard []User
-  for index, r := range results { //TODO may use it later for ranking
+  for index, r := range results { 
   	var d User
   	if err := r.Unmarshal(&d); err != nil {
   		log.Printf("Error unmarshalling result: %v", err)
