@@ -126,12 +126,13 @@ func leaderboardHandler(w http.ResponseWriter, req *http.Request) {
 	  return
   }
   var lboard []User
-  for _, r := range results { //TODO may use it later for ranking
+  for index, r := range results { //TODO may use it later for ranking
   	var d User
   	if err := r.Unmarshal(&d); err != nil {
   		log.Printf("Error unmarshalling result: %v", err)
   	}
   	d.Username = r.Key()
+  	d.Rank = len(results)-index
   	lboard = append(lboard, d)  	
   }
 
