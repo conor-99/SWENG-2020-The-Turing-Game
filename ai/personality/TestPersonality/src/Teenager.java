@@ -1,7 +1,4 @@
-// Class worked on by the AI Group: Claire McNamara
-
-package com.sweng.theturinggame;
-
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -22,14 +19,13 @@ public class Teenager extends BotPersonality {
         return input;
     }
 
-    // Adds in slang into the AI's message.
     private String shortenWords(String input){
         HashMap<String, String>  shortenedWords = new HashMap<>();
         shortenedWords.put("your", "ur");
         shortenedWords.put("tonight", "2nite");
         shortenedWords.put("for your information", "fyi");
         shortenedWords.put("okay", "k");
-        shortenedWords.put("ok", "k");
+        shortenedWords.put("k", "ur");
         shortenedWords.put("to", "2");
         shortenedWords.put("tomorrow", "2moro");
         shortenedWords.put("easy", "ez");
