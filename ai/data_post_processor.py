@@ -46,7 +46,6 @@ class DataPostProcessor:
         keyApprox['m'] = "mnkjloik"
         keyApprox[' '] = " "
     
-        probOfTypoArray = []
         probOfTypo = int(prob * 100)
 
         returnText = self.input
