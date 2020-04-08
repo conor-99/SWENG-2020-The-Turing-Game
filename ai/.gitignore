@@ -1,3 +1,4 @@
 #This is for avoiding upload of files we couldn't care less about
 __pycache__/**
 *.pyc
+*.json
