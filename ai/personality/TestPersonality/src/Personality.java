@@ -33,7 +33,7 @@ public class Personality {
     // Add in the spelling mistakes - Luiz Fellipe
     public static String addSpellingMistake(String input) {
     	double prob=0.1;
-        Hashtable<Character, String> keyApprox = new Hashtable<Character, String>();
+        HashMap<Character, String> keyApprox = new HashMap<Character, String>();
 
         keyApprox.put('q', "qwasedzx");
         keyApprox.put('w', "wqesadrfcx");
