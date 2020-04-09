@@ -1,1 +1,1 @@
-exit
+hello my little artificial friend

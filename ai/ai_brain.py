@@ -52,7 +52,7 @@ class AI:
         tl.files.assign_weights(load_weights, self.model_)
 
     # Take a name, create a mood
-    def initliase(self, name):
+    def initialise(self, name):
         self.name = name
         feelings = ["good","well","great","grand","excellent","ecstatic","happy","sad","annoyed","frustrated","angry","tired","okay","alright"]
         self.feel = feelings[randint(0,len(feelings)-1)]
