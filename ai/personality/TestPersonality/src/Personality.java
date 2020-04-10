@@ -1,5 +1,11 @@
 import java.util.HashMap;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+
 
 public class Personality {
 
@@ -100,7 +106,38 @@ public class Personality {
     // Get a random name - Kishore
     public static String getName() {
     	String name = "";
-    	return name;
+    	String filePath = "data/names.txt";  	
+	    String[] words = null;
+		
+	    try {
+			words = readLines(filePath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	     
+		Random r = new Random();
+		int low = 0;
+		int high = 4944;
+		int result = r.nextInt(high-low) + low;
+
+		name = words[result];
+    	    
+		return name;
+   }
+
+    public static String[] readLines(String filename) throws IOException {
+        FileReader fileReader = new FileReader(filename);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        List<String> lines = new ArrayList<String>();
+        String line = null;
+        while ((line = bufferedReader.readLine()) != null) {
+            lines.add(line);
+        }
+        bufferedReader.close();
+        return lines.toArray(new String[lines.size()]);
     }
+    
+
 
 }
