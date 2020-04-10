@@ -4,17 +4,18 @@ import random
 
 class DataPostProcessor:
 
-    def __init__(self, input, personality):
-        self.input = input
+    def __init__(self, personality):
         self.personality = personality
 
-    def postProcess(self):
-        #self.input = self.personality.addPersonality(self.input)
+    def postProcess(self, string):
+        # This has not been fully implemented for the CLI due to its inclusion in the integrated product
+        # string = self.personality.addPersonality(string)
         if random.randint(1, self.personality.probSpellingMistake) == 1:
-            self.addSpellingMistakes()
+            string = self.addSpellingMistakes(string)
+        return string
 
-    # Substitute words with common misspellings IF APPROPRIATE. Needs to return a string.
-    def addSpellingMistakes(self):
+    # Substitute words with common misspellings.
+    def addSpellingMistakes(self, string):
         prob=0.1
         keyApprox = {}
         
@@ -48,10 +49,10 @@ class DataPostProcessor:
     
         probOfTypo = int(prob * 100)
 
-        returnText = self.input
-        while self.input == returnText:
+        returnText = string
+        while string == returnText:
             returnText = ''
-            for letter in self.input:
+            for letter in string:
                 lcletter = letter.lower()
                 if not lcletter in keyApprox.keys():
                     newletter = lcletter
@@ -65,6 +66,6 @@ class DataPostProcessor:
                     newletter = newletter.upper()
                 returnText += newletter
 
-        self.input = returnText
+        string = returnText
 
-        return 
+        return returnText

@@ -37,10 +37,7 @@ class AI:
     decoder_seq_length = 20
 
     # Creates an instance of the AI with it's name being passed from a name-generating function
-    def __init__(self, name):
-        self.name = name
-        feelings = ["good","well","great","grand","excellent","ecstatic","happy","sad","annoyed","frustrated","angry","tired","okay","alright"]
-        self.feel = feelings[randint(0,len(feelings)-1)]
+    def __init__(self):
         # preProcessor is only utilised here to avoid duplicating string2array
         self.preProcessor = DataPreProcessor("")
         self.model_ = Seq2seq(
@@ -51,9 +48,14 @@ class AI:
             n_units=256,
             embedding_layer=tl.layers.Embedding(vocabulary_size=self.vocabulary_size, embedding_size=self.emb_dim),
             )
-
         load_weights = tl.files.load_npz(name="data/model.npz")
         tl.files.assign_weights(load_weights, self.model_)
+
+    # Take a name, create a mood
+    def initialise(self, name):
+        self.name = name
+        feelings = ["good","well","great","grand","excellent","ecstatic","happy","sad","annoyed","frustrated","angry","tired","okay","alright"]
+        self.feel = feelings[randint(0,len(feelings)-1)]
 
     # Handle the creation of a response from the given input
     def respond(self, seed, number):

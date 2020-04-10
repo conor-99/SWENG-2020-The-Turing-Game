@@ -1,54 +1,50 @@
 # Class worked on by: Claire, Luiz Fellipe, Leo
 from data_pre_processor import DataPreProcessor
+from data_post_processor import DataPostProcessor
 from teenager import Teenager
 from young_adult import YoungAdult
 from adult import Adult
-from data_post_processor import DataPostProcessor
 from ai_brain import AI
 from apscheduler.schedulers.background import BackgroundScheduler
 
-import random, json
+import random, json, os
 
 end = False
 
-# Takes input from commandline, processes it, displays processed output via commandline.
-def main():
-    # This will be an environment variable later
-    terminalMode = False
-    # Simple bit of beautifying for our command-line output.
-    c_background   = ""
-    c_blue         = ""
-    c_green        = ""
-    c_red          = ""
-    c_close        = ""
-    # Certain aspects of this program will only exist on the commandline.
-    if terminalMode:
-        # Set up our timer
-        timer = BackgroundScheduler({"apscheduler.timezone": "Europe/Dublin"})
+# Takes input from commandline, processes it, displays processed output via commandline
+def terminalMode():
+    # Simple bit of beautifying for our command-line output
+    c_background    = "\033[44m"
+    c_blue          = "\033[94m"
+    c_green         = "\033[92m"
+    c_red           = "\033[91m"
+    c_close         = "\033[0m"
+
+    # Set up our timer
+    timer = BackgroundScheduler({"apscheduler.timezone": "Europe/Dublin"})
+    accepted_timer = False
+
+    # Small bit of starting text to introduce the user
+    startingText = ["Ask a question, and see how our AI responds.",
+    "Please ensure queries have more than three words.",
+    "You will have 60 seconds upon entering your first query to make further queries.",
+    "The program will wait for your last query before exiting."]
+    print(c_green + "\n".join(startingText) + c_close)
+
+    # The timer feature is optional over the command line because it will be implemented by the UI team
+    print(c_background + "Do you wish to enable the on-minute timer? (y/n)" + c_close)
+    userInput = input()
+    if userInput == "y" or userInput == "Y":
         timer.add_job(endProgram, "interval", minutes=1)
-        c_background    = "\033[44m"
-        c_blue          = "\033[94m"
-        c_green         = "\033[92m"
-        c_red           = "\033[91m"
-        c_close         = "\033[0m"
-        # Small bit of starting text to introduce the user.
-        startingText = ["Ask a question, and see how our AI responds.",
-        "Please ensure queries have more than three words.",
-        "You will have 60 seconds upon entering your first query to make further queries.",
-        "The program will wait for your last query before exiting."]
-        print(c_green + "\n".join(startingText) + c_close)
+        accepted_timer = True
 
-        # Where input is user input from commandline.
-        print(c_background + "Enter the input, or enter 'exit' to end:" + c_close)
-
+    print(c_background + "Enter the input, or enter 'exit' to end:" + c_close)
     personality = None
 
-    # Random name generator
-    with open("data/names.txt") as word_file:
-        names = word_file.read().split()
-        name = random.choice(names)
+    # Retrieve a name
+    name = naming()
 
-    # Personality is randomly assigned between teenager, young adult and adult with a random name each time.
+    # Personality is randomly assigned between teenager, young adult and adult with a random name each time
     perNum = random.randint(1, 3)
     if perNum == 1:
         personality = Teenager(name)
@@ -57,79 +53,98 @@ def main():
     else:
         personality = Adult(name)
 
-    # Our input/feedback loop, starting our timer on its initial run.
+    # Initialise the ai
+    ai = AI()
+    ai.initialise(name)
+    # Initialise the pre-processor
+    preProcessor = DataPreProcessor("")
+    # Initialise the post-processor with the personality
+    postProcessor = DataPostProcessor(personality)
+
+    # Our input/feedback loop, starting our timer on its initial run
     initial = True
     global end
-    while(not end):
-        if terminalMode:
-            userInput = input()
-            # Start the timer after the first user input.
-            if initial:
-                timer.start()
-                initial = False
-            # Exit on 'exit'.
-            if(userInput == "exit"):
-                break
-            # Determine our input, whether an error or a valid query.
-            output = arrangeResp(userInput, personality)
-            # Handle queries that are too short.
-            if output == False:
-                print(c_red + "The input string must have a minimum of three words!" + c_close)
-            else:
-                print(c_blue + output + c_close)
+    while end is False:
+        # Start the timer after the first user input if it was accepted
+        if initial and accepted_timer:
+            timer.start()
+        elif not initial:
             print(c_background + "Enter another input:" + c_close)
+        initial = False
+        # Take the user input
+        userInput = input()
+        # Exit on 'exit'
+        if(userInput == "exit"):
+            break
+        # Ensure input string is long enough if the terminal is being used
+        if preProcessor.processInput(userInput) is not False:
+            # Determine our input - whether an error or a valid query
+            output = arrangeResp(preProcessor.input, preProcessor, ai)
+            # Post-processing of data
+            output = postProcessor.postProcess(output)
+            # Provide result to the user
+            print(c_blue + output + c_close)
         else:
-            # handle input through a json file
-            with open("connect.json") as json_file:
-                data = json.load(json_file)
-                for i in data["user"]:
-                    uuid = i["uuid"]
-                    userInput = i["question"]
-                    jPersonality = i["personality"]
-                    answered = i["answered"]
-            # if a personality has been established dont change it
-            if jPersonality == "":
-                jPersonality = perNum
-            # make sure we aren't working on an answered question
-            if answered is False:
-                dump = {}
-                # arrange response json with the output contained
-                dump["user"] = []
-                dump["user"].append({
-                    "uuid" : uuid,
-                    "question" : userInput,
-                    "personality" : jPersonality,
-                    "output" : arrangeResp(userInput, personality),
-                    "answered" : "True"
-                })
-                with open("connect.json", "w") as outfile:
-                    json.dump(dump, outfile)
-            end = True
-    if terminalMode:
-        print(c_green + "Program exited." + c_close)
+            # Handle queries that are too short
+            print(c_red + "The input string must have a minimum of three words!" + c_close)
+    # Terminate the program
+    print(c_green + "Program exited." + c_close)
 
-def arrangeResp(userInput, personality):
-    # Creating our AI.
-    ai = AI(personality.name)
-    # Where output is the processed output.
-    preProcessor = DataPreProcessor(userInput)
-    # Ensure input string is long enough if the terminal is being used
-    if preProcessor.processInput() is not True:
-        return False
-    processedInput = preProcessor.input
-    # This is passed to the model.
-    response = ai.respond(processedInput, 1)
-    # Receive response from the model.
+def serviceMode():
+    # Initialise the AI
+    ai = AI()
+    ai.initialise("")
+    # Initialise the pre-processor
+    preProcessor = DataPreProcessor("")
+    # Create a previous input to track new questions
+    pInput = ""
+    # The program will only exit when it recieves a deliberate 'exit' message
+    loop = True
+    while loop:
+        # Check if the file exists
+        path = str(os.getcwd()) + "/input.txt"
+        if os.path.isfile(path):
+            # Read our input from the file
+            input_file = open("input.txt", "r")
+            # Clean our input
+            preProcessor.processInput(input_file.read())
+            input = str(preProcessor.input.strip())
+            # Exit on 'exit'
+            if input == "exit":
+                loop = False
+            elif input != pInput:
+                pInput = input
+                # Write the the output back to a different file
+                output_file = open("output.txt", "w")
+                output = arrangeResp(input, preProcessor, ai)
+                output_file.write(output)
+                output_file.close()
+
+def arrangeResp(input, preProcessor, ai):
+    # This is passed to the model
+    response = ai.respond(input, 1)
+    # Receive response from the model
     response = preProcessor.array2String(response)
-    # Post-processing of data
-    postProcessor = DataPostProcessor(response, personality)
-    postProcessor.postProcess()
     return response
 
+def naming():
+    # Random name generator
+    with open("data/names.txt") as word_file:
+        names = word_file.read().split()
+        name = random.choice(names)
+    return name
+
 def endProgram():
+    # This exists to allow our timer to end the program
     global end
     end = True
     return
 
+# This function dictates which mode to operate the program in
+# For individual use over the command line, un-comment terminalMode()
+# For use as a service in the integrated product, un-comment serviceMode()
 if __name__ == '__main__':
-    main()
+    if os.getenv("MODE", 0) == 0:
+        terminalMode()
+    else:
+        serviceMode()

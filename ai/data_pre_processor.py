@@ -11,7 +11,8 @@ class DataPreProcessor:
         self.input = input
 
     # Processes the input
-    def processInput(self):
+    def processInput(self, string):
+        self.input = string
         self.convertAccentedCharsToAscii()
         self.removeNumbers()
         # This is only relevant because of the weird library
