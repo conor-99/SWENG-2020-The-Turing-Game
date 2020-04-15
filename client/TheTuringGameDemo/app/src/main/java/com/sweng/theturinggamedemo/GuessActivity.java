@@ -20,9 +20,37 @@ public class GuessActivity extends AppCompatActivity {
         findViewById(R.id.guess_button_ai).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(GuessActivity.this, ResultActivity.class));
+                submitGuess(0);
             }
         });
+
+        findViewById(R.id.guess_button_human).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitGuess(1);
+            }
+        });
+
+        findViewById(R.id.guess_button_flag).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // make API request
+            }
+        });
+
+    }
+
+    private void submitGuess(int guess) {
+
+        // make API request to submit guess and set result to response
+
+        int result = 0;
+
+        Intent intent = new Intent(GuessActivity.this, ResultActivity.class);
+        Bundle b = new Bundle();
+        b.putInt("result", result);
+        intent.putExtras(b);
+        startActivity(intent);
 
     }
 
