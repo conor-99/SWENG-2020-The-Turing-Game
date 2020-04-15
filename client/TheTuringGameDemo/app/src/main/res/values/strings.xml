@@ -2,6 +2,9 @@
 
     <string name="app_name">The Turing Game Demo</string>
 
+    <string name="auth_button_main">CONTINUE</string>
+    <string name="auth_button_sign_out">SIGN OUT</string>
+
     <string name="main_image_logo_cd">The Turing Game logo</string>
     <string name="main_button_play">PLAY</string>
     <string name="main_button_leaderboards">LEADERBOARDS</string>
