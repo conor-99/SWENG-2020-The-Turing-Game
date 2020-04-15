@@ -1,4 +1,4 @@
-# Class worked on by: Claire
+# Class worked on by: Claire, Diego
 import random
 from personality import Personality
 
@@ -13,8 +13,9 @@ class Adult(Personality):
         output = self.addPunctuation(input)
         return output
 
-    # The returned string from the AI model does not have any punctuation. 
-    # This function needs to add punction to that string and return it. - Diego
+    # The returned string from the AI model does not have any punctuation 
+    # This adds some punctuation to that string and return it
+    # The idea being an adult would endeavour to have correct punctuation (or would rely completely on auto-correct)
     def addPunctuation(self, input):
         #Sentence Openers nn
         input = input.replace("hello", "hello,")
@@ -48,7 +49,7 @@ class Adult(Personality):
         input = input.replace("werent" , "were't")
         input = input.replace("wouldnt" , "wouldn't")
 
-        #Questions
+        # Questions
         q1 = "what"
         q2 = "when"
         q3 = "where"
@@ -61,13 +62,13 @@ class Adult(Personality):
 
         if (input.count(q1) == 1 or input.count(q2) == 1 or input.count(q3) == 1 
         or input.count(q4) == 1 or input.count(q5) == 1 or input.count(q6) == 1 
-        or input.count(q7) == 1 or input.count(q8) == 1 or input.count(q9) == 1) : input = input + "?"
+        or input.count(q7) == 1 or input.count(q8) == 1 or input.count(q9) == 1):
+            input = input + "?"
+        else:
+            input = input + "."
 
-        else: input = input + "."
-
-
-        #Other
+        # A few more miscellaneous changes
         input = input.replace("however", "however,")
-        input = input.replace("ill" , "i'll")
-        input = input.replace("im", "i'm")
+        input = input.replace("ill" , "I'll")
+        input = input.replace("im", "I'm")
         return input

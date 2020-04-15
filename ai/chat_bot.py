@@ -141,8 +141,7 @@ def endProgram():
     return
 
 # This function dictates which mode to operate the program in
-# For individual use over the command line, un-comment terminalMode()
-# For use as a service in the integrated product, un-comment serviceMode()
+# This is
 if __name__ == '__main__':
     if os.getenv("MODE", 0) == 0:
         terminalMode()

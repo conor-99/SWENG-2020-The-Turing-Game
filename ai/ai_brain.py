@@ -18,7 +18,8 @@ from sklearn.utils import shuffle
 from tensorlayer.models.seq2seq import Seq2seq
 from tensorlayer.models.seq2seq_with_attention import Seq2seqLuongAttention
 
-# The following code is adapted (mostly) from https://github.com/tensorlayer/seq2seq-chatbot
+# The following code is adapted from https://github.com/tensorlayer/seq2seq-chatbot
+# - __init__(), respond()
 class AI:
     metadata, idx_q, idx_a = data.load_data(PATH='data/{}/'.format("twitter"))
     src_vocab_size = len(metadata['idx2w'])
