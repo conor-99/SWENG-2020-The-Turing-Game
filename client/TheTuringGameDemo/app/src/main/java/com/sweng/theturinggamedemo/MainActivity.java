@@ -22,6 +22,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.main_button_leaderboards).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, LeaderboardsActivity.class));
+            }
+        });
+
+        findViewById(R.id.main_button_settings).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+            }
+        });
+
     }
 
 }

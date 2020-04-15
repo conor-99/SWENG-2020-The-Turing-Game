@@ -106,6 +106,7 @@ public class Authentication extends AppCompatActivity {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
 
         if (account != null) {
+            Contact.email = account.getEmail();
             startActivity(new Intent(Authentication.this, MainActivity.class));
         }
         else {

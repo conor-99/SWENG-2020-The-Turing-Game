@@ -18,11 +18,30 @@
 
     <string name="guess_text_human">HUMAN PLAYER</string>
     <string name="guess_text_ai">AI PLAYER</string>
+    <string name="guess_text_flag">FLAG CONVERSATION</string>
     <string name="guess_image_logo_cd">The Turing Game logo</string>
     <string name="guess_image_guess_cd">Guess text</string>
 
     <string name="result_text_menu">BACK TO MENU</string>
+    <string name="result_text_survey">TAKE OUR SURVEY</string>
     <string name="result_image_logo_cd">The Turing Game logo</string>
     <string name="result_image_correct_cd">Correct text</string>
+    <string name="result_image_incorrect_cd">Incorrect text</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
 </resources>
