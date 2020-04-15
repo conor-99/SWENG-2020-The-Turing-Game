@@ -98,7 +98,7 @@ public class PlayActivity extends AppCompatActivity {
 
     private void getMessages(int messageNum) {
 
-        String route = Constants.BASE_URL + String.format("message%d.json", messageNum);
+        String route = Globals.BASE_URL + String.format("message%d.json", messageNum);
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(route).build();

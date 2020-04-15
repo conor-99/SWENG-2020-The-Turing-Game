@@ -44,13 +44,7 @@ public class GuessActivity extends AppCompatActivity {
 
         // make API request to submit guess and set result to response
 
-        int result = 0;
-
-        Intent intent = new Intent(GuessActivity.this, ResultActivity.class);
-        Bundle b = new Bundle();
-        b.putInt("result", result);
-        intent.putExtras(b);
-        startActivity(intent);
+        startActivity(new Intent(GuessActivity.this, ResultActivity.class));
 
     }
 

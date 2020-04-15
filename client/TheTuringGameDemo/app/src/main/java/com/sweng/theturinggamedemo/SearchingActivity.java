@@ -29,7 +29,7 @@ public class SearchingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_searching);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        String route = Constants.BASE_URL + "start.json";
+        String route = Globals.BASE_URL + "start.json";
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(route).build();
