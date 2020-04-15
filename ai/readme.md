@@ -28,3 +28,10 @@ It should take a few seconds to initialise.
 Queries to the CLI can be typed, with the option of a minute-long timer for entering questions.
 Queries via input.txt will be continuously read and responses written to output.txt.
 In either case, to end the program enter `exit`.
+
+## Authors  
+Claire McNamra - mcnamacl   
+Leo McClean - leomcclean    
+Kishore Muthu - Kishore11N   
+Diego Molamphy - molamphd   
+Luiz Fellipe Montibeller - lzfellipe   
