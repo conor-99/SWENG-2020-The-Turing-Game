@@ -1,3 +1,5 @@
+// Class worked on by Claire
+
 public class BotPersonality {
 
     public String name;

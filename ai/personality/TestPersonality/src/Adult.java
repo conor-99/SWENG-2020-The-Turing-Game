@@ -1,3 +1,5 @@
+//Class worked on by: Claire, Diego 
+
 import java.util.Random;
 
 public class Adult extends BotPersonality {
@@ -17,7 +19,7 @@ public class Adult extends BotPersonality {
         return input;
     }
     
-    // Add punctuation to the string - Diego
+    // Add punctuation to the string 
     public static String addPuctuation(String input) {
         // Sentence Openers 
         input = input.replace("hello", "hello,");

@@ -1,3 +1,5 @@
+// Class worked on by: Claire
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;

@@ -1,3 +1,5 @@
+// Class worked on by: Claire, Luiz Fellipe, Kishore
+
 import java.util.HashMap;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -36,7 +38,7 @@ public class Personality {
         return message;
     }
     
-    // Add in the spelling mistakes - Luiz Fellipe
+    // Add in the spelling mistakes
     public static String addSpellingMistake(String input) {
     	double prob=0.1;
         HashMap<Character, String> keyApprox = new HashMap<Character, String>();
@@ -103,7 +105,7 @@ public class Personality {
     }
     
     
-    // Get a random name - Kishore
+    // Get a random name
     public static String getName() {
     	String name = "";
     	String filePath = "data/names.txt";  	

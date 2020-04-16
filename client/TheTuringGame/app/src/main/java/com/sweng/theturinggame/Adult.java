@@ -1,4 +1,4 @@
-// Class worked on by the AI Group: Claire McNamara
+// Class worked on by the AI Group: Claire McNamara, Diego Molamphy
 
 package com.sweng.theturinggame;
 

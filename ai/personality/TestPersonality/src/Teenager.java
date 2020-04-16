@@ -1,4 +1,5 @@
-import java.util.Arrays;
+// Class worked on by: Claire
+
 import java.util.HashMap;
 import java.util.Random;
 

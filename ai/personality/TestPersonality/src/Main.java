@@ -1,3 +1,5 @@
+//Class worked on by: Claire
+
 public class Main {
 
     public static void main(String args[]){
