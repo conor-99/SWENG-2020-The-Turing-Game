@@ -21,6 +21,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.Objects;
+
 public class Authentication extends AppCompatActivity {
 
     private SignInButton signInButton;
@@ -33,6 +35,7 @@ public class Authentication extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         signInButton = findViewById(R.id.auth_button_sign_in);
 

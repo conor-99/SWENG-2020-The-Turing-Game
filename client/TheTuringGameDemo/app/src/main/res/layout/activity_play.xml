@@ -27,6 +27,15 @@
         android:divider="#fff"
         android:dividerHeight="-15sp" />
 
+    <TextView
+        android:id="@+id/play_text_typing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15sp"
+        android:paddingTop="5sp"
+        android:paddingBottom="10sp"
+        android:text="Other user is typing ..." />
+
     <LinearLayout
         android:id="@+id/play_layout_input"
         android:layout_width="match_parent"

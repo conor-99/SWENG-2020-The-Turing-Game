@@ -1,19 +1,11 @@
 package com.sweng.theturinggamedemo;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.Objects;
-import java.util.concurrent.ExecutionException;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -29,7 +21,13 @@ public class SearchingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_searching);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        String route = Globals.BASE_URL + "start.json";
+        startConversation();
+
+    }
+
+    private void startConversation() {
+
+        String route = Globals.API.BASE_URL + Globals.API.CONVERSATION_START;
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(route).build();
@@ -46,7 +44,7 @@ public class SearchingActivity extends AppCompatActivity {
 
                 try {
                     JSONObject json = new JSONObject(response.body().string());
-                    int conversationId = json.getInt("cid");
+                    Globals.conversationId = json.getInt("cid");
                     startActivity(new Intent(SearchingActivity.this, PlayActivity.class));
                 } catch (Exception e) {
                     finish();

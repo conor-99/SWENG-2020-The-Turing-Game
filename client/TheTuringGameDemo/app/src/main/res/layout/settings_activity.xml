@@ -9,35 +9,42 @@
     <TextView
         android:id="@+id/settings"
         style="@android:style/Widget.DeviceDefault.Button.Borderless"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="145dp"
-        android:layout_marginEnd="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="33dp"
+        android:layout_marginBottom="663dp"
         android:text="SETTINGS"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="#000"
-        android:textSize="24dp"
+        android:textColor="#292929"
+        android:textSize="22sp"
         android:typeface="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="57dp"
+        tools:layout_editor_absoluteY="25dp" />
 
     <Button
         android:id="@+id/buttonDelete"
-        android:layout_width="260dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="350dp"
-        android:layout_marginBottom="240dp"
+        style="@android:style/Widget.DeviceDefault.Button.Borderless"
+        android:layout_width="238dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="122dp"
+        android:layout_marginBottom="547dp"
+        android:background="@drawable/button_background"
         android:text="DELETE MY ACCOUNT"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#292929"
+        android:textSize="18sp"
+        android:typeface="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
