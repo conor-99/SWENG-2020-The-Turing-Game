@@ -175,6 +175,7 @@ public class PlayActivity extends AppCompatActivity {
 
                     for (int i = 0; i < messages.length(); i++) {
                         String messageText = messages.getJSONObject(i).getString("text");
+                        messageText = Personality.apply(Globals.conversationId, messageText);
                         addMessage(false, messageText);
                     }
 
