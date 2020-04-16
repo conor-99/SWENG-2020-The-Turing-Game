@@ -36,7 +36,7 @@ def conversation_send(cid):
 
 @app.route('/api/conversation/receive/<int:cid>', methods=['GET'])
 def conversation_receive(cid):
-    if uniform(0, 1) < 0.15:
+    if uniform(0, 1) < 0.125:
         return jsonify({'messages': [{'id': 0, 'text': choice(MESSAGES), 'timestamp': '2020-01-01 00:00:00'}]})
     else:
         return jsonify({'messages': []})
