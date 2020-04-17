@@ -32,6 +32,7 @@ public class SearchingActivity extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(route).build();
 
+        // Make the API start conversation request
         client.newCall(request).enqueue(new Callback() {
 
             @Override
@@ -44,7 +45,7 @@ public class SearchingActivity extends AppCompatActivity {
 
                 try {
                     JSONObject json = new JSONObject(response.body().string());
-                    Globals.conversationId = json.getInt("cid");
+                    Globals.conversationId = json.getInt("cid"); // set the conversation ID of this conversation
                     startActivity(new Intent(SearchingActivity.this, PlayActivity.class));
                 } catch (Exception e) {
                     finish();

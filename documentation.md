@@ -27,7 +27,7 @@ Start a conversation with another user or the AI.
 ###### Example:
 
 ```cURL
-curl -X GET localhost/api/conversation/start -u abcdef_12345
+curl -X GET SERVER_URL/api/conversation/start -u abcdef_12345
 ```
 
 ```JSON
@@ -58,7 +58,7 @@ None.
 ###### Example:
 
 ```cURL
-curl -X POST localhost/api/conversation/flag/123 -u abcdef_12345 -d '"guess":1'
+curl -X POST SERVER_URL/api/conversation/flag/123 -u abcdef_12345 -d '"guess":1'
 ```
 
 ### Flag Conversation
@@ -82,7 +82,7 @@ None.
 ###### Example:
 
 ```cURL
-curl -X GET localhost/api/conversation/flag/123 -u abcdef_12345
+curl -X GET SERVER_URL/api/conversation/flag/123 -u abcdef_12345
 ```
 
 ### Send Message
@@ -107,7 +107,7 @@ None.
 ###### Example:
 
 ```cURL
-curl -X POST localhost/api/conversation/send/123 -u abcdef_12345 -d '"text":"Hello World!"'
+curl -X POST SERVER_URL/api/conversation/send/123 -u abcdef_12345 -d '"text":"Hello World!"'
 ```
 
 ### Receive Message
@@ -135,7 +135,7 @@ Get all of the messages from the other user in a conversation. Supply the conver
             "text": "Hello World!",
             "timestamp": "2020-01-01 00:00:00"
         },
-        ...
+        { }
     ]
 }
 ```
@@ -143,7 +143,7 @@ Get all of the messages from the other user in a conversation. Supply the conver
 ###### Example:
 
 ```cURL
-curl -X GET localhost/api/conversation/receive/123 -u abcdef_12345'
+curl -X GET SERVER_URL/api/conversation/receive/123 -u abcdef_12345'
 ```
 
 ```JSON
@@ -188,7 +188,7 @@ None.
             "username": "user1",
             "score": 0.95
         },
-        ...
+        { }
     ]
 }
 ```
@@ -196,7 +196,7 @@ None.
 ###### Example:
 
 ```cURL
-curl -X GET localhost/api/leaderboards
+curl -X GET SERVER_URL/api/leaderboards
 ```
 
 ```JSON
@@ -234,13 +234,9 @@ curl -X GET localhost/api/leaderboards
 ## Authentication
 
 ### Introduction
-Firebase provides built-in method to authenticate users using Google Sign-In. It requires SHA1 fingerprint (should be there now) and generates UserID for a logged in user. 
-UserID is persistent, i.e it is unique for a specific user and will be the same on each log in.
-It will be used to associate data with a specific user.
+
+Firebase provides a built-in method to authenticate users using Google Sign-In. It requires a SHA1 fingerprint which should be present in the Firebase console and generates a `UserID` for a logged in user. The `UserID` is persistent which means that it will be unique for a specific user and will be the same on each log in. This ID will be used to associate data with a specific user.
 
 ### API
 
-When user is logged in on front end, he should be assigned the session token.
-This token will be used by back-end to verify the user and proceed with data transfer.
-API should be set up like in the documentation below:
-[Firebase token verification guide](https://firebase.google.com/docs/auth/admin/verify-id-tokens "Firebase documentation")
+When a user is logged in on the front-end they should be assigned a session token. This token will be used by the back-end to verify the user and proceed with data transfer. The API's authentication should be set up as outlined in [this document](https://firebase.google.com/docs/auth/admin/verify-id-tokens).

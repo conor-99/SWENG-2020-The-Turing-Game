@@ -39,6 +39,7 @@ public class Authentication extends AppCompatActivity {
 
         signInButton = findViewById(R.id.auth_button_sign_in);
 
+        // Initialise authentication
         mAuth = FirebaseAuth.getInstance();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -61,6 +62,7 @@ public class Authentication extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
+        // Check if a user is signed in
         if (currentUser != null)
             updateUI(currentUser);
 
@@ -71,6 +73,7 @@ public class Authentication extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
 
+        // Handle result of sign-in activity
         if (requestCode == RC_SIGN_IN) {
 
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -90,6 +93,7 @@ public class Authentication extends AppCompatActivity {
 
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
 
+        // Use the sign-in account to get a Firebase user
         mAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -108,6 +112,7 @@ public class Authentication extends AppCompatActivity {
 
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
 
+        // If the user is signed in go to the main activity
         if (account != null) {
             Contact.email = account.getEmail();
             startActivity(new Intent(Authentication.this, MainActivity.class));

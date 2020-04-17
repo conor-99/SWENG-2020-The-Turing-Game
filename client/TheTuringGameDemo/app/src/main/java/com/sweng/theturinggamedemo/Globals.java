@@ -7,9 +7,10 @@ class Globals {
     static final String TAG = "DEMO_DEBUG";
     static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
-    static int conversationId = Integer.MAX_VALUE;
-    static boolean guessResult = false;
+    static int conversationId = Integer.MAX_VALUE; // conversation ID of the current conversation
+    static boolean guessResult = false; // was the user's guess correct or not
 
+    // API url and routes
     class API {
 
         static final String BASE_URL = "https://mccaulco.pythonanywhere.com/api";

@@ -36,6 +36,7 @@ public class ResultActivity extends AppCompatActivity {
 
         super.onStart();
 
+        // If the user guessed correctly show the 'correct' image, otherwise show the 'incorrect' image
         if (Globals.guessResult) {
             findViewById(R.id.result_image_correct).setVisibility(View.VISIBLE);
         } else {

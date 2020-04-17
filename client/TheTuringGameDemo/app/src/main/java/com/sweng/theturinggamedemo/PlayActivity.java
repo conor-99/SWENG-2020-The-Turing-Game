@@ -67,12 +67,14 @@ public class PlayActivity extends AppCompatActivity {
             }
         });
 
+        // Trigger this timer once per second
         TextView timerText = findViewById(R.id.play_text_timer);
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
 
+                // If time has run out then end the conversation
                 if (countdown < 0) {
 
                     timer.cancel();
@@ -84,11 +86,13 @@ public class PlayActivity extends AppCompatActivity {
 
                 } else {
 
+                    // Update the countdown
                     String padding = (countdown < 10) ? "0" : "";
                     timerText.setText(String.format("00:%s%d", padding, countdown));
                     countdown--;
 
-                    if (textInput.getText().toString().trim() != oldText)
+                    // If the current text is different to the last tell the API we've been typing
+                    if (!textInput.getText().toString().trim().equals(oldText))
                         setTyping();
 
                     getTyping();
@@ -121,11 +125,13 @@ public class PlayActivity extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(route).post(body).build();
 
+        // Make the API send message request
         client.newCall(request).enqueue(new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
 
+                // Run the Toast in the UI thread
                 PlayActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
                         Toast.makeText(PlayActivity.this, "Sorry, there was an error sending your message", Toast.LENGTH_SHORT).show();
@@ -158,6 +164,7 @@ public class PlayActivity extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(route).build();
 
+        // Make the API receive message request
         client.newCall(request).enqueue(new Callback() {
 
             @Override
@@ -173,9 +180,10 @@ public class PlayActivity extends AppCompatActivity {
                     JSONObject json = new JSONObject(response.body().string());
                     JSONArray messages = json.getJSONArray("messages");
 
+                    // Add each incoming message to the UI
                     for (int i = 0; i < messages.length(); i++) {
                         String messageText = messages.getJSONObject(i).getString("text");
-                        messageText = Personality.apply(Globals.conversationId, messageText);
+                        messageText = Personality.apply(Globals.conversationId, messageText); // apply the AI group's personality logic to the message
                         addMessage(false, messageText);
                     }
 
@@ -196,6 +204,7 @@ public class PlayActivity extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(route).build();
 
+        // Make the API get typing request
         client.newCall(request).enqueue(new Callback() {
 
             @Override
@@ -211,6 +220,7 @@ public class PlayActivity extends AppCompatActivity {
                     JSONObject json = new JSONObject(response.body().string());
                     int result = json.getInt("typing");
 
+                    // If the other user was typing set the 'typing' text to visible, else invisible
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -236,6 +246,7 @@ public class PlayActivity extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(route).build();
 
+        // Make the API set typing request
         client.newCall(request).enqueue(new Callback() {
 
             @Override
@@ -263,11 +274,13 @@ public class PlayActivity extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(route).build();
 
+        // Make the API end conversation request
         client.newCall(request).enqueue(new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
 
+                // Run the Toast in the UI thread
                 PlayActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
                         Toast.makeText(PlayActivity.this, "Sorry, something went wrong while trying to end the conversation", Toast.LENGTH_SHORT).show();

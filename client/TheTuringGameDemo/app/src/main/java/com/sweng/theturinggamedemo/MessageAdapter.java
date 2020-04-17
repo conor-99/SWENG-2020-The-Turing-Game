@@ -1,3 +1,5 @@
+/* Reference: https://github.com/ScaleDrone/android-chat-tutorial */
+
 package com.sweng.theturinggamedemo;
 
 import android.app.Activity;

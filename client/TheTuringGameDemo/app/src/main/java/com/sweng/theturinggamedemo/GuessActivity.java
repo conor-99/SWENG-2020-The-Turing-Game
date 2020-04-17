@@ -57,6 +57,7 @@ public class GuessActivity extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(route).post(body).build();
 
+        // Make the API submit guess request
         client.newCall(request).enqueue(new Callback() {
 
             @Override
@@ -72,7 +73,7 @@ public class GuessActivity extends AppCompatActivity {
 
                     JSONObject json = new JSONObject(response.body().string());
                     int result = json.getInt("result");
-                    Globals.guessResult = (result == 1);
+                    Globals.guessResult = (result == 1); // check if we guessed correctly
 
                     startActivity(new Intent(GuessActivity.this, ResultActivity.class));
 
@@ -93,11 +94,13 @@ public class GuessActivity extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(route).build();
 
+        // Make the API flag conversation request
         client.newCall(request).enqueue(new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
 
+                // Run the Toast in the UI thread
                 GuessActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
                         Toast.makeText(GuessActivity.this, "Sorry, we could not flag this conversation", Toast.LENGTH_SHORT).show();
@@ -111,6 +114,7 @@ public class GuessActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
 
                 try {
+                    // Run the Toast in the UI thread
                     GuessActivity.this.runOnUiThread(new Runnable() {
                         public void run() {
                             Toast.makeText(GuessActivity.this, "Conversation has been flagged", Toast.LENGTH_SHORT).show();

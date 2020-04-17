@@ -36,6 +36,7 @@ public class LeaderboardsActivity extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(route).build();
 
+        // Make the API leaderboards request
         client.newCall(request).enqueue(new Callback() {
 
             @Override
@@ -52,6 +53,7 @@ public class LeaderboardsActivity extends AppCompatActivity {
                     JSONObject json = new JSONObject(response.body().string());
                     JSONArray rankings = json.getJSONArray("users");
 
+                    // Construct the output text
                     for (int i = 0; i < rankings.length() && i < 20; i++) {
                         JSONObject ranking = (JSONObject) rankings.get(i);
 
